@@ -1,0 +1,2840 @@
+<!DOCTYPE html>
+<html lang="id"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generator Soal SMP — Standar Kurikulum Merdeka</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Font Arab berharakat jelas untuk PAI */
+    .arabic-text {
+      font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
+      direction: rtl;
+      unicode-bidi: isolate;
+      font-size: 1.45rem;
+      line-height: 2.35;
+      text-align: right;
+    }
+
+    /* Styling kertas naskah ujian A4 */
+    .exam-paper {
+      font-family: 'Times New Roman', Times, serif;
+      color: #0f172a;
+      line-height: 1.5;
+    }
+
+    .exam-paper .ui-badge,
+    .exam-paper .no-print {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Tabel kop & identitas presisi (layar & Word) */
+    .kop-header-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      border-bottom: 3px double #0f172a;
+      margin-bottom: 10px;
+    }
+
+    .kop-header-table td {
+      vertical-align: middle;
+      padding-bottom: 8px;
+    }
+
+    .identitas-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 11pt;
+      margin-bottom: 12px;
+      border-bottom: 1.5px solid #0f172a;
+    }
+
+    .identitas-table td {
+      padding: 2.5px 2px;
+      vertical-align: top;
+    }
+
+    /* Tabel nomor & butir soal sejajar lurus */
+    .soal-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin-bottom: 10px;
+    }
+
+    .soal-table td {
+      vertical-align: top;
+      padding: 1.5px 0;
+    }
+
+    .opsi-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin-top: 3px;
+    }
+
+    .opsi-table td {
+      vertical-align: top;
+      padding: 1.5px 0;
+    }
+
+    /* Tabel pernyataan Benar/Salah & Menjodohkan sejajar persis dengan lebar soal */
+    .akm-grid-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      margin-top: 6px;
+      font-size: 10.5pt;
+    }
+
+    .akm-grid-table th,
+    .akm-grid-table td {
+      border: 1px solid #334155;
+      padding: 5px 7px;
+      vertical-align: top;
+    }
+
+    .akm-grid-table th {
+      background-color: #f1f5f9;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .pernyataan-inner-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .pernyataan-inner-table td {
+      border: none !important;
+      padding: 0 !important;
+      vertical-align: top;
+    }
+
+    /* Pengaturan cetak A4 */
+    @media print {
+      body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-full-width {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
+      .page-break-before {
+        page-break-before: always;
+        break-before: page;
+      }
+      .soal-block {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }
+  </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sticky{position:sticky}.top-0{top:0px}.z-30{z-index:30}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-10{height:2.5rem}.h-12{height:3rem}.h-2{height:0.5rem}.h-3\.5{height:0.875rem}.h-4{height:1rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-12{width:3rem}.w-16{width:4rem}.w-2{width:0.5rem}.w-3\.5{width:0.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-full{width:100%}.max-w-7xl{max-width:80rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.list-disc{list-style-type:disc}.list-none{list-style-type:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.gap-6{gap:1.5rem}.space-y-0\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.125rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.125rem * var(--tw-space-y-reverse))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.375rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.375rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.625rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.self-start{align-self:flex-start}.overflow-hidden{overflow:hidden}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254 / var(--tw-border-opacity, 1))}.border-blue-200\/80{border-color:rgb(191 219 254 / 0.8)}.border-blue-900\/60{border-color:rgb(30 58 138 / 0.6)}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208 / var(--tw-border-opacity, 1))}.border-emerald-200\/80{border-color:rgb(167 243 208 / 0.8)}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183 / var(--tw-border-opacity, 1))}.border-emerald-400\/30{border-color:rgb(52 211 153 / 0.3)}.border-emerald-400\/40{border-color:rgb(52 211 153 / 0.4)}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-200\/70{border-color:rgb(226 232 240 / 0.7)}.border-slate-200\/80{border-color:rgb(226 232 240 / 0.8)}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.border-t-blue-950{--tw-border-opacity:1;border-top-color:rgb(23 37 84 / var(--tw-border-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-blue-50\/70{background-color:rgb(239 246 255 / 0.7)}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84 / var(--tw-bg-opacity, 1))}.bg-emerald-400{--tw-bg-opacity:1;background-color:rgb(52 211 153 / var(--tw-bg-opacity, 1))}.bg-emerald-50{--tw-bg-opacity:1;background-color:rgb(236 253 245 / var(--tw-bg-opacity, 1))}.bg-emerald-500\/15{background-color:rgb(16 185 129 / 0.15)}.bg-emerald-500\/20{background-color:rgb(16 185 129 / 0.2)}.bg-emerald-700{--tw-bg-opacity:1;background-color:rgb(4 120 87 / var(--tw-bg-opacity, 1))}.bg-indigo-700{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-slate-50\/70{background-color:rgb(248 250 252 / 0.7)}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-blue-950{--tw-gradient-from:#172554 var(--tw-gradient-from-position);--tw-gradient-to:rgb(23 37 84 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-900{--tw-gradient-from:#0f172a var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 23 42 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-blue-950{--tw-gradient-to:rgb(23 37 84 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #172554 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-slate-900{--tw-gradient-to:#0f172a var(--tw-gradient-to-position)}.p-10{padding:2.5rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-3\.5{padding-left:0.875rem;padding-right:0.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.pb-3\.5{padding-bottom:0.875rem}.pl-3{padding-left:0.75rem}.pl-4{padding-left:1rem}.pt-0\.5{padding-top:0.125rem}.pt-1{padding-top:0.25rem}.pt-1\.5{padding-top:0.375rem}.pt-2{padding-top:0.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84 / var(--tw-text-opacity, 1))}.text-emerald-300{--tw-text-opacity:1;color:rgb(110 231 183 / var(--tw-text-opacity, 1))}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-emerald-800\/90{color:rgb(6 95 70 / 0.9)}.text-emerald-900{--tw-text-opacity:1;color:rgb(6 78 59 / var(--tw-text-opacity, 1))}.text-emerald-950{--tw-text-opacity:1;color:rgb(2 44 34 / var(--tw-text-opacity, 1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94 / var(--tw-text-opacity, 1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72 / var(--tw-text-opacity, 1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60 / var(--tw-text-opacity, 1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57 / var(--tw-text-opacity, 1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:border-rose-300:hover{--tw-border-opacity:1;border-color:rgb(253 164 175 / var(--tw-border-opacity, 1))}.hover\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-100:hover{--tw-bg-opacity:1;background-color:rgb(209 250 229 / var(--tw-bg-opacity, 1))}.hover\:bg-emerald-500\/25:hover{background-color:rgb(16 185 129 / 0.25)}.hover\:bg-emerald-800:hover{--tw-bg-opacity:1;background-color:rgb(6 95 70 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-800:hover{--tw-bg-opacity:1;background-color:rgb(55 48 163 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-100:hover{--tw-bg-opacity:1;background-color:rgb(255 228 230 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-200:hover{--tw-bg-opacity:1;background-color:rgb(254 205 211 / var(--tw-bg-opacity, 1))}.hover\:bg-rose-50:hover{--tw-bg-opacity:1;background-color:rgb(255 241 242 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-100:hover{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-900:hover{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.hover\:from-blue-900:hover{--tw-gradient-from:#1e3a8a var(--tw-gradient-from-position);--tw-gradient-to:rgb(30 58 138 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-slate-800:hover{--tw-gradient-to:#1e293b var(--tw-gradient-to-position)}.hover\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60 / var(--tw-text-opacity, 1))}.hover\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42 / var(--tw-text-opacity, 1))}.hover\:text-blue-900:hover{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:shadow-lg:hover{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:border-blue-900:focus{--tw-border-opacity:1;border-color:rgb(30 58 138 / var(--tw-border-opacity, 1))}.focus\:border-emerald-600:focus{--tw-border-opacity:1;border-color:rgb(5 150 105 / var(--tw-border-opacity, 1))}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-blue-900:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(30 58 138 / var(--tw-ring-opacity, 1))}.focus\:ring-blue-900\/20:focus{--tw-ring-color:rgb(30 58 138 / 0.2)}.disabled\:opacity-60:disabled{opacity:0.6}.group[open] .group-open\:rotate-180{--tw-rotate:180deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:justify-between{justify-content:space-between}.sm\:self-center{align-self:center}.sm\:p-10{padding:2.5rem}.sm\:p-14{padding:3.5rem}.sm\:p-7{padding:1.75rem}.sm\:p-8{padding:2rem}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:text-lg{font-size:1.125rem;line-height:1.75rem}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}}@media (min-width: 1280px){.xl\:col-span-4{grid-column:span 4 / span 4}.xl\:col-span-8{grid-column:span 8 / span 8}}</style></head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- HEADER UTAMA -->
+  <header class="no-print bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white shadow-md sticky top-0 z-30 border-b border-blue-900/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-300 shrink-0 shadow-inner">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold tracking-tight leading-tight">
+            Generator Soal SMP <span class="text-emerald-400 font-semibold">— Kurikulum Merdeka</span>
+          </h1>
+          <p class="text-xs text-slate-300">Penyusun Naskah Soal, Kisi-Kisi, Kartu Soal, &amp; Rubrik Penilaian Otomatis</p>
+        </div>
+      </div>
+
+      <!-- Status Koneksi Gemini AI -->
+      <div class="flex items-center gap-2 self-start sm:self-center">
+        <button type="button" onclick="focusApiKeySettings(false)" title="Informasi koneksi Gemini AI &amp; Vercel" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/30 shadow-sm transition cursor-pointer">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="header-ai-status-text">Gemini AI • Terhubung (API Key)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- KONTEN UTAMA -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- PANEL KIRI: FORM PARAMETER SOAL -->
+      <aside class="no-print lg:col-span-5 xl:col-span-4 bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="px-5 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-2">
+          <div>
+            <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Parameter Naskah Soal</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Lengkapi identitas &amp; komposisi soal SMP</p>
+          </div>
+          <button type="button" id="btn-reset-form" title="Kosongkan formulir dan naskah untuk ganti soal baru" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white hover:bg-rose-50 text-slate-600 hover:text-rose-700 border border-slate-300 hover:border-rose-300 transition cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"></path>
+            </svg>
+            Reset Form
+          </button>
+        </div>
+
+        <form id="soal-form" class="p-5 space-y-4" novalidate="">
+          <!-- Kotak Validasi -->
+          <div id="validation-box" class="hidden rounded-xl bg-rose-50 border border-rose-200 p-3.5 text-xs text-rose-800 space-y-1">
+            <p class="font-bold text-rose-900">Mohon lengkapi parameter berikut:</p>
+            <ul id="validation-list" class="list-disc pl-4 space-y-0.5"></ul>
+          </div>
+
+          <!-- 1. Mata Pelajaran -->
+          <div>
+            <label for="mapel-select" class="block text-xs font-semibold text-slate-700 mb-1">1. Mata Pelajaran <span class="text-rose-500">*</span></label>
+            <select id="mapel-select" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none transition">
+              <option value="">-- Pilih Mata Pelajaran --</option>
+              <option value="Ilmu Pengetahuan Alam (IPA)">Ilmu Pengetahuan Alam (IPA)</option>
+              <option value="Matematika">Matematika</option>
+              <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+              <option value="Bahasa Inggris">Bahasa Inggris</option>
+              <option value="Ilmu Pengetahuan Sosial (IPS)">Ilmu Pengetahuan Sosial (IPS)</option>
+              <option value="Pendidikan Pancasila">Pendidikan Pancasila</option>
+              <option value="Pendidikan Agama Islam dan Budi Pekerti">Pendidikan Agama Islam dan Budi Pekerti</option>
+              <option value="Informatika">Informatika</option>
+              <option value="Seni Budaya">Seni Budaya</option>
+              <option value="PJOK">PJOK</option>
+              <option value="Prakarya">Prakarya</option>
+              <option value="Bahasa Daerah / Madura">Bahasa Daerah / Madura</option>
+              <option value="__CUSTOM__">+ Mata Pelajaran Lainnya...</option>
+            </select>
+            <input type="text" id="mapel-custom" placeholder="Ketik nama mata pelajaran..." class="hidden mt-2 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-sm text-slate-800 focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none">
+          </div>
+
+          <!-- 2. Kelas -->
+          <div>
+            <label for="kelas-select" class="block text-xs font-semibold text-slate-700 mb-1">2. Kelas / Fase <span class="text-rose-500">*</span></label>
+            <select id="kelas-select" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none transition">
+              <option value="">-- Pilih Kelas --</option>
+              <option value="7">Kelas 7 SMP (Fase D)</option>
+              <option value="8">Kelas 8 SMP (Fase D)</option>
+              <option value="9">Kelas 9 SMP (Fase D)</option>
+            </select>
+          </div>
+
+          <!-- 3. Materi Pokok -->
+          <div>
+            <label for="materi-input" class="block text-xs font-semibold text-slate-700 mb-1">3. Materi Pokok / Topik <span class="text-rose-500">*</span></label>
+            <input type="text" id="materi-input" placeholder="Contoh: Sistem Pernapasan Manusia / Teorema Pythagoras" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none transition">
+          </div>
+
+          <!-- 4. Tingkat Kesulitan -->
+          <div>
+            <label for="kesulitan-select" class="block text-xs font-semibold text-slate-700 mb-1">4. Tingkat Kesulitan <span class="text-rose-500">*</span></label>
+            <select id="kesulitan-select" class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 focus:border-blue-900 focus:ring-2 focus:ring-blue-900/20 outline-none transition">
+              <option value="">-- Pilih Tingkat Kesulitan --</option>
+              <option value="Campuran Proporsional (30% Mudah L1, 40% Sedang L2, 30% HOTS L3)">Campuran Proporsional (L1, L2, &amp; HOTS L3)</option>
+              <option value="Mudah (Dominan L1 / C1-C2 Pemahaman Dasar)">Mudah (Dominan L1 / C1–C2)</option>
+              <option value="Sedang (Dominan L2 / C3 Aplikasi Konsep)">Sedang (Dominan L2 / C3)</option>
+              <option value="Sulit / HOTS (Dominan L3 / C4-C6 Penalaran &amp; Analisis)">Sulit / HOTS (Dominan L3 / C4–C6)</option>
+            </select>
+          </div>
+
+          <!-- 5. Rincian Jumlah Soal -->
+          <div class="pt-1">
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-semibold text-slate-700">5. Rincian Jumlah Soal <span class="text-rose-500">*</span></label>
+              <span id="total-soal-badge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-950 text-emerald-300">12 Butir Soal</span>
+            </div>
+
+            <div class="space-y-2.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
+              <!-- A. PG Sederhana -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between gap-2">
+                  <div>
+                    <span class="block text-xs font-semibold text-slate-800">A. Pilihan Ganda Sederhana</span>
+                    <span class="block text-[11px] text-slate-500">4 opsi (A–D), 1 jawaban benar</span>
+                  </div>
+                  <input type="number" id="jml-pg-sederhana" min="0" max="40" value="5" class="w-16 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm font-semibold text-center text-slate-900 focus:border-blue-900 outline-none">
+                </div>
+                <label class="inline-flex items-center gap-1.5 pl-3 text-[11px] text-blue-950 font-medium cursor-pointer select-none">
+                  <input type="checkbox" id="img-pg-sederhana" checked="" class="rounded border-slate-300 text-blue-900 focus:ring-blue-900 cursor-pointer">
+                  <span>Sertakan Gambar AI pada bentuk soal ini</span>
+                </label>
+              </div>
+
+              <!-- B. PG Kompleks -->
+              <div class="pt-2 border-t border-slate-200/70 space-y-1.5">
+                <div class="flex items-center justify-between gap-2">
+                  <div>
+                    <span class="block text-xs font-semibold text-slate-800">B. Pilihan Ganda Kompleks</span>
+                    <span class="block text-[11px] text-slate-500">&gt;1 jawaban benar (opsi abjad A–F)</span>
+                  </div>
+                  <input type="number" id="jml-pg-kompleks" min="0" max="20" value="2" class="w-16 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm font-semibold text-center text-slate-900 focus:border-blue-900 outline-none">
+                </div>
+                <div class="flex items-center justify-between gap-2 pl-3">
+                  <label for="pernyataan-pgk" class="text-[11px] text-slate-600">Jumlah opsi pernyataan / soal:</label>
+                  <select id="pernyataan-pgk" class="rounded-lg border border-slate-300 bg-white px-2 py-1 text-xs font-semibold text-slate-800 outline-none">
+                    <option value="3">3 Pernyataan (A–C)</option>
+                    <option value="4" selected="">4 Pernyataan (A–D)</option>
+                    <option value="5">5 Pernyataan (A–E)</option>
+                    <option value="6">6 Pernyataan (A–F)</option>
+                  </select>
+                </div>
+                <label class="inline-flex items-center gap-1.5 pl-3 text-[11px] text-blue-950 font-medium cursor-pointer select-none">
+                  <input type="checkbox" id="img-pg-kompleks" class="rounded border-slate-300 text-blue-900 focus:ring-blue-900 cursor-pointer">
+                  <span>Sertakan Gambar AI pada bentuk soal ini</span>
+                </label>
+              </div>
+
+              <!-- C. Benar / Salah -->
+              <div class="pt-2 border-t border-slate-200/70 space-y-1.5">
+                <div class="flex items-center justify-between gap-2">
+                  <div>
+                    <span class="block text-xs font-semibold text-slate-800">C. Benar / Salah (Tabel AKM)</span>
+                    <span class="block text-[11px] text-slate-500">Pernyataan berabjad (A–F)</span>
+                  </div>
+                  <input type="number" id="jml-benar-salah" min="0" max="20" value="2" class="w-16 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm font-semibold text-center text-slate-900 focus:border-blue-900 outline-none">
+                </div>
+                <div class="flex items-center justify-between gap-2 pl-3">
+                  <label for="pernyataan-bs" class="text-[11px] text-slate-600">Jumlah baris pernyataan / soal:</label>
+                  <select id="pernyataan-bs" class="rounded-lg border border-slate-300 bg-white px-2 py-1 text-xs font-semibold text-slate-800 outline-none">
+                    <option value="3">3 Pernyataan (A–C)</option>
+                    <option value="4" selected="">4 Pernyataan (A–D)</option>
+                    <option value="5">5 Pernyataan (A–E)</option>
+                  </select>
+                </div>
+                <label class="inline-flex items-center gap-1.5 pl-3 text-[11px] text-blue-950 font-medium cursor-pointer select-none">
+                  <input type="checkbox" id="img-benar-salah" class="rounded border-slate-300 text-blue-900 focus:ring-blue-900 cursor-pointer">
+                  <span>Sertakan Gambar AI pada bentuk soal ini</span>
+                </label>
+              </div>
+
+              <!-- D. Menjodohkan -->
+              <div class="pt-2 border-t border-slate-200/70 space-y-1.5">
+                <div class="flex items-center justify-between gap-2">
+                  <div>
+                    <span class="block text-xs font-semibold text-slate-800">D. Menjodohkan (AKM)</span>
+                    <span class="block text-[11px] text-slate-500">Premis kiri &amp; respon kanan (+1 pengecoh)</span>
+                  </div>
+                  <input type="number" id="jml-menjodohkan" min="0" max="15" value="1" class="w-16 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm font-semibold text-center text-slate-900 focus:border-blue-900 outline-none">
+                </div>
+                <div class="flex items-center justify-between gap-2 pl-3">
+                  <label for="premis-menjodohkan" class="text-[11px] text-slate-600">Jumlah premis / soal:</label>
+                  <select id="premis-menjodohkan" class="rounded-lg border border-slate-300 bg-white px-2 py-1 text-xs font-semibold text-slate-800 outline-none">
+                    <option value="3" selected="">3 Premis (4 Respon)</option>
+                    <option value="4">4 Premis (5 Respon)</option>
+                    <option value="5">5 Premis (6 Respon)</option>
+                  </select>
+                </div>
+                <label class="inline-flex items-center gap-1.5 pl-3 text-[11px] text-blue-950 font-medium cursor-pointer select-none">
+                  <input type="checkbox" id="img-menjodohkan" class="rounded border-slate-300 text-blue-900 focus:ring-blue-900 cursor-pointer">
+                  <span>Sertakan Gambar AI pada bentuk soal ini</span>
+                </label>
+              </div>
+
+              <!-- E. Esai / Uraian -->
+              <div class="pt-2 border-t border-slate-200/70 space-y-1.5">
+                <div class="flex items-center justify-between gap-2">
+                  <div>
+                    <span class="block text-xs font-semibold text-slate-800">E. Esai / Uraian HOTS</span>
+                    <span class="block text-[11px] text-slate-500">Analitis (C4–C6) + Rubrik skor</span>
+                  </div>
+                  <input type="number" id="jml-esai" min="0" max="15" value="2" class="w-16 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-sm font-semibold text-center text-slate-900 focus:border-blue-900 outline-none">
+                </div>
+                <label class="inline-flex items-center gap-1.5 pl-3 text-[11px] text-blue-950 font-medium cursor-pointer select-none">
+                  <input type="checkbox" id="img-esai" class="rounded border-slate-300 text-blue-900 focus:ring-blue-900 cursor-pointer">
+                  <span>Sertakan Gambar AI pada bentuk soal ini</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info Pengaturan Gambar Otomatis -->
+          <div class="p-3 rounded-xl bg-blue-50/70 border border-blue-200/80 text-[11px] text-slate-600 leading-relaxed">
+            <span class="font-semibold text-blue-950">Ilustrasi Gambar Otomatis AI:</span> Hanya bentuk soal yang dicentang opsi <em>"Sertakan Gambar AI"</em> di atas yang akan dibuatkan gambar pendukung (1–2 butir relevan per bentuk soal terpilih), sehingga tidak semua soal diberi gambar.
+          </div>
+
+          <!-- 6. Logo Kop Surat -->
+          <details class="group border border-slate-200 rounded-xl bg-slate-50/70">
+            <summary class="cursor-pointer list-none px-3.5 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-700 hover:text-slate-900 select-none">
+              <span>6. Logo Kop Surat (Pemkab Kiri &amp; Sekolah Kanan)</span>
+              <svg class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+              </svg>
+            </summary>
+            <div class="px-3.5 pb-3.5 pt-2 border-t border-slate-200/70 space-y-3 text-xs">
+              <!-- Logo Pemkab (Kiri) -->
+              <div class="space-y-1.5">
+                <span class="font-semibold text-slate-700 block">Logo Pemerintah Kabupaten (Kiri):</span>
+                <div class="flex items-center gap-2">
+                  <div id="thumb-logo-pemkab" class="w-10 h-10 rounded-lg border border-slate-300 bg-white flex items-center justify-center text-[10px] text-slate-400 overflow-hidden shrink-0">Kiri</div>
+                  <div class="flex-1 space-y-1">
+                    <div class="flex gap-1.5">
+                      <label class="px-2.5 py-1 rounded-lg bg-blue-950 text-white font-medium cursor-pointer hover:bg-blue-900 transition">
+                        Pilih Gambar
+                        <input type="file" id="input-logo-pemkab" accept="image/*" class="hidden">
+                      </label>
+                      <button type="button" id="btn-clear-logo-pemkab" class="hidden px-2 py-1 rounded-lg bg-rose-100 text-rose-700 font-medium hover:bg-rose-200">Hapus</button>
+                    </div>
+                    <input type="url" id="url-logo-pemkab" placeholder="Atau tempel URL logo Pemkab..." class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-[11px] outline-none">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Logo Sekolah (Kanan) -->
+              <div class="space-y-1.5 pt-2 border-t border-slate-200/70">
+                <span class="font-semibold text-slate-700 block">Logo Sekolah (Kanan):</span>
+                <div class="flex items-center gap-2">
+                  <div id="thumb-logo-sekolah" class="w-10 h-10 rounded-lg border border-slate-300 bg-white flex items-center justify-center text-[10px] text-slate-400 overflow-hidden shrink-0">Kanan</div>
+                  <div class="flex-1 space-y-1">
+                    <div class="flex gap-1.5">
+                      <label class="px-2.5 py-1 rounded-lg bg-blue-950 text-white font-medium cursor-pointer hover:bg-blue-900 transition">
+                        Pilih Gambar
+                        <input type="file" id="input-logo-sekolah" accept="image/*" class="hidden">
+                      </label>
+                      <button type="button" id="btn-clear-logo-sekolah" class="hidden px-2 py-1 rounded-lg bg-rose-100 text-rose-700 font-medium hover:bg-rose-200">Hapus</button>
+                    </div>
+                    <input type="url" id="url-logo-sekolah" placeholder="Atau tempel URL logo Sekolah..." class="w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-[11px] outline-none">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Tombol Submit Utama -->
+          <button type="submit" id="btn-generate" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-950 to-slate-900 hover:from-blue-900 hover:to-slate-800 text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60">
+            <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"></path>
+            </svg>
+            Buat Paket Soal Sekarang
+          </button>
+
+          <!-- Pengaturan Koneksi Vercel & Gemini AI (Collapsible) -->
+          <details id="api-key-details" class="group border border-slate-200 rounded-xl bg-slate-50/70" open="">
+            <summary class="cursor-pointer list-none px-3.5 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-600 hover:text-slate-900 select-none">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Deploy ke Vercel (Tanpa Pengguna Input API Key)
+              </span>
+              <svg class="w-4 h-4 text-slate-400 transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+              </svg>
+            </summary>
+            <div class="px-3.5 pb-3.5 pt-2 border-t border-slate-200/70 space-y-3 text-xs text-slate-600">
+              <!-- Cara 1: Ekspor 1 File index.html Siap Vercel -->
+              <div id="vercel-setup-notice" class="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950 text-[11px] leading-relaxed space-y-2">
+                <p class="font-bold text-emerald-900">Cara Paling Praktis (Cukup 1 File <code>index.html</code> di Vercel):</p>
+                <p class="text-emerald-900">Tempelkan Gemini API Key Anda (format baru berawalan <code>AQ.</code> dari Google AI Studio) <strong>sekali saja</strong> di bawah, lalu unduh <code>index.html</code> siap Vercel. Saat diunggah ke Vercel, guru &amp; siswa langsung bisa membuat soal tanpa diminta API Key lagi:</p>
+                <div class="flex gap-1.5">
+                  <input type="password" id="custom-api-key" placeholder="Tempel Gemini API Key (AQ....) di sini" class="flex-1 rounded-lg border border-emerald-300 bg-white px-2.5 py-1.5 text-xs text-slate-800 focus:border-emerald-600 outline-none" value="">
+                  <button type="button" id="btn-toggle-key" class="px-2.5 py-1.5 rounded-lg bg-white hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-medium transition cursor-pointer">
+                    Lihat
+                  </button>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <button type="button" id="btn-export-vercel-html" class="w-full py-2 px-3 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[11px] shadow-sm transition cursor-pointer">
+                    Unduh index.html Siap Upload Vercel (Tanpa Input Key)
+                  </button>
+                </div>
+                <div class="flex items-center justify-between pt-0.5">
+                  <span id="api-key-status" class="text-[11px] text-emerald-800 font-semibold">Status: API Key Tersimpan di Browser</span>
+                  <button type="button" id="btn-clear-key" class="text-[11px] text-rose-600 hover:underline cursor-pointer">Hapus Key</button>
+                </div>
+                <p class="text-[10px] text-emerald-800/90 border-t border-emerald-200/80 pt-1.5">
+                  <strong>Catatan Key <code>AQ.</code>:</strong> Pastikan pembatasan API pada kunci di Google AI Studio / Cloud Console mengizinkan <em>Generative Language API</em>.
+                </p>
+              </div>
+
+              <!-- Cara 2: Opsional Backend Vercel api/gemini.js -->
+              <div class="pt-2 border-t border-slate-200/80 space-y-1.5 text-[11px]">
+                <span class="block font-semibold text-slate-700">Alternatif (Jika Memakai Folder <code>api/</code> di Vercel):</span>
+                <p class="text-slate-500">Simpan file <code>api/gemini.js</code> di proyek Vercel dan isi <code>GEMINI_API_KEY</code> (key <code>AQ.</code>) di Environment Variables.</p>
+                <div class="flex flex-wrap gap-1.5">
+                  <button type="button" id="btn-download-vercel-code" class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-800 text-white font-semibold transition cursor-pointer">
+                    Unduh api/gemini.js
+                  </button>
+                  <button type="button" id="btn-copy-vercel-code" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-semibold transition cursor-pointer">
+                    Salin Kode Backend
+                  </button>
+                </div>
+              </div>
+            </div>
+          </details>
+        </form>
+      </aside>
+
+      <!-- PANEL KANAN: HASIL NASKAH SOAL, KISI-KISI & ANALISIS -->
+      <section class="lg:col-span-7 xl:col-span-8 print-full-width space-y-4">
+
+        <!-- Toolbar Navigasi Tab & Tombol Ekspor -->
+        <div id="result-toolbar" class="no-print hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-3 space-y-2.5">
+          <!-- Baris Tab Tampilan -->
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button type="button" id="tab-semua" onclick="switchTab('semua')" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-950 text-white transition cursor-pointer">Semua</button>
+            <button type="button" id="tab-naskah" onclick="switchTab('naskah')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer">Naskah Soal</button>
+            <button type="button" id="tab-kunci" onclick="switchTab('kunci')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer">Kunci &amp; Pembahasan</button>
+            <button type="button" id="tab-kisikisi" onclick="switchTab('kisikisi')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer">Kisi-Kisi &amp; Kartu Soal</button>
+            <button type="button" id="tab-analisis" onclick="switchTab('analisis')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer">Analisis Kognitif</button>
+            <button type="button" id="tab-kuis" onclick="switchTab('kuis')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition cursor-pointer">Mode Kuis</button>
+          </div>
+
+          <!-- Baris Tombol Unduh & Reset -->
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
+            <div class="flex flex-wrap items-center gap-1.5">
+              <button type="button" onclick="printExam()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-900 text-white transition cursor-pointer">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"></path>
+                </svg>
+                Cetak / PDF
+              </button>
+              <button type="button" onclick="downloadWordPart('soal')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-700 hover:bg-blue-800 text-white transition cursor-pointer">
+                Soal (.doc)
+              </button>
+              <button type="button" onclick="downloadWordPart('kunci')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-700 hover:bg-emerald-800 text-white transition cursor-pointer">
+                Kunci (.doc)
+              </button>
+              <button type="button" onclick="downloadWordPart('kisikisi')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-700 hover:bg-indigo-800 text-white transition cursor-pointer">
+                Kisi-Kisi &amp; Kartu (.doc)
+              </button>
+              <button type="button" onclick="copyPlainText()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer">
+                Salin Teks
+              </button>
+            </div>
+
+            <button type="button" onclick="resetAllWorkspace()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition cursor-pointer">
+              Reset / Soal Baru
+            </button>
+          </div>
+        </div>
+
+        <!-- STATE 1: TAMPILAN AWAL (PRATINJAU KOP SMP NEGERI 3 BESUKI) -->
+        <div id="empty-state" class="no-print bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-10 space-y-6">
+          <div class="exam-paper border border-slate-200 rounded-xl p-5 sm:p-7 bg-white shadow-inner">
+            <table class="kop-header-table">
+              <colgroup>
+                <col style="width: 15%;">
+                <col style="width: 70%;">
+                <col style="width: 15%;">
+              </colgroup>
+              <tbody><tr>
+                <td id="kop-logo-pemkab-slot" style="text-align: center;"><button type="button" onclick="document.getElementById('input-logo-pemkab').click()" class="no-print text-[10px] text-slate-400 hover:text-blue-900 border border-dashed border-slate-300 rounded-lg px-2 py-3 cursor-pointer">+ Logo Pemkab</button></td>
+                <td style="text-align: center; line-height: 1.3;">
+                  <div style="font-size: 12pt; font-weight: bold; letter-spacing: 0.4px;">PEMERINTAH KABUPATEN SITUBONDO</div>
+                  <div style="font-size: 15pt; font-weight: bold; letter-spacing: 0.6px;">SMP NEGERI 3 BESUKI</div>
+                  <div style="font-size: 9.5pt;">Jalan Gunung Ringgit Besuki, Situbondo, Jawa Timur 68356</div>
+                  <div style="font-size: 9pt; font-style: italic;">Laman www.smpn3besuki.sch.id E-Mail : admin@smpn3besuki.sch.id</div>
+                </td>
+                <td id="kop-logo-sekolah-slot" style="text-align: center;"><button type="button" onclick="document.getElementById('input-logo-sekolah').click()" class="no-print text-[10px] text-slate-400 hover:text-blue-900 border border-dashed border-slate-300 rounded-lg px-2 py-3 cursor-pointer">+ Logo Sekolah</button></td>
+              </tr>
+            </tbody></table>
+            <div style="text-align: center; font-size: 10.5pt; color: #475569; padding-top: 4px;">
+              Pratinjau Kop Naskah Soal — Silakan lengkapi parameter di panel kiri lalu klik <strong>Buat Paket Soal Sekarang</strong>.
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
+              <p class="text-xs font-bold text-slate-900">5 Bentuk Soal AKM &amp; HOTS</p>
+              <p class="text-[11px] text-slate-600 mt-1">PG Sederhana, PG Kompleks, Benar/Salah, Menjodohkan, &amp; Esai C4–C6 siap cetak.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
+              <p class="text-xs font-bold text-slate-900">Administrasi Guru Lengkap</p>
+              <p class="text-[11px] text-slate-600 mt-1">Otomatis dilengkapi Kisi-Kisi, Kartu Soal per butir, &amp; Analisis Level Kognitif.</p>
+            </div>
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
+              <p class="text-xs font-bold text-slate-900">Ekspor Word (.doc) Presisi</p>
+              <p class="text-[11px] text-slate-600 mt-1">Nomor, opsi abjad, rumus IPA/Matematika, ayat Arab PAI, &amp; gambar ilustrasi rapi di Word.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATE 2: LOADING -->
+        <div id="loading-state" class="no-print hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-10 sm:p-14 text-center space-y-4">
+          <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-blue-950 animate-spin mx-auto"></div>
+          <div class="space-y-1.5">
+            <h3 class="text-base font-bold text-slate-900">Menyusun Naskah Soal Standar Kurikulum Merdeka...</h3>
+            <p id="loading-step-text" class="text-xs text-slate-600">Menyiapkan kisi-kisi dan indikator soal...</p>
+            <div class="pt-1">
+              <span id="loading-timer-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-900 border border-blue-200">
+                Waktu proses: 0 detik
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATE 3: DOKUMEN NASKAH SOAL, KUNCI, KISI-KISI & ANALISIS -->
+        <div id="document-container" class="exam-paper hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-10 print-full-width"></div>
+
+        <!-- STATE 4: MODE KUIS INTERAKTIF -->
+        <div id="quiz-container" class="no-print hidden bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-6"></div>
+
+      </section>
+    </div>
+  </main>
+
+  <footer class="no-print border-t border-slate-200 bg-white py-3.5 px-6 text-center text-xs text-slate-500">
+    Generator Soal SMP — Standar Kurikulum Merdeka (Fase D) • SMP Negeri 3 Besuki
+  </footer>
+
+  <!-- SCRIPT UTAMA APLIKASI -->
+  <script>
+    const DEFAULT_ENV_API_KEY = 'AQ.Ab8RN6IwpU09cF9rWoIGMLAZs61PnoiiTIdlW3fLFfpCc-JFDg';
+    const EMBEDDED_VERCEL_MODE = true;
+    const STORAGE_KEY_API = 'smp_soal_gemini_api_key_v1';
+    const STORAGE_LOGO_PEMKAB = 'smp_soal_logo_pemkab_v1';
+    const STORAGE_LOGO_SEKOLAH = 'smp_soal_logo_sekolah_v1';
+
+    let currentGeneratedData = null;
+    let currentMeta = null;
+    let currentTab = 'semua';
+    let logoPemkabData = '';
+    let logoSekolahData = '';
+    let editableJudulAsesmen = 'ASESMEN SUMATIF LINGKUP MATERI';
+    let editableAlokasiWaktu = '90 Menit';
+
+    const VERCEL_SERVERLESS_CODE = `// Simpan file ini sebagai api/gemini.js di root proyek Vercel Anda
+// Lalu tambahkan Environment Variable: GEMINI_API_KEY (format AQ....) di Dashboard Vercel
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: { message: 'Method Not Allowed' } });
+  }
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: { message: 'GEMINI_API_KEY belum diatur di Vercel Environment Variables.' } });
+  }
+  try {
+    const { model = 'gemini-2.5-flash', payload } = req.body || {};
+    const url = \`https://generativelanguage.googleapis.com/v1beta/models/\${encodeURIComponent(model)}:generateContent\`;
+    const upstream = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': apiKey
+      },
+      body: JSON.stringify(payload)
+    });
+    const data = await upstream.json();
+    return res.status(upstream.status).json(data);
+  } catch (err) {
+    return res.status(500).json({ error: { message: err.message || 'Kesalahan server Vercel.' } });
+  }
+}`;
+
+    /* ==========================================================================
+       1. UTILITAS UMUM & NOTIFIKASI
+       ========================================================================== */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatRichText(text) {
+      if (text === null || text === undefined) return '';
+      let s = String(text);
+      const safeTags = [];
+      s = s.replace(/<\/?(sup|sub|b|strong|i|em|u|br)\b[^>]*>/gi, (match) => {
+        const token = `___SAFE_TAG_${safeTags.length}___`;
+        safeTags.push(match);
+        return token;
+      });
+      s = escapeHtml(s);
+      s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      s = s.replace(/\n/g, '<br />');
+      safeTags.forEach((tag, idx) => {
+        s = s.replace(`___SAFE_TAG_${idx}___`, tag);
+      });
+      return s;
+    }
+
+    function showToast(message, type = 'info') {
+      const existing = document.getElementById('app-toast');
+      if (existing) existing.remove();
+
+      const colors = {
+        success: 'bg-emerald-900 text-white border-emerald-700',
+        error: 'bg-rose-900 text-white border-rose-700',
+        info: 'bg-slate-900 text-white border-slate-700'
+      };
+      const toast = document.createElement('div');
+      toast.id = 'app-toast';
+      toast.className = `no-print fixed bottom-5 right-5 z-50 max-w-sm px-4 py-3 rounded-xl shadow-xl border text-xs font-medium leading-relaxed transition-all ${colors[type] || colors.info}`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        if (toast.parentNode) toast.remove();
+      }, 4500);
+    }
+
+    function getAlphabetLabel(index) {
+      return String.fromCharCode(65 + index);
+    }
+
+    function normalizePgkOptions(opsiList) {
+      if (!Array.isArray(opsiList)) return [];
+      return opsiList.map((item, idx) => {
+        const huruf = getAlphabetLabel(idx);
+        if (typeof item === 'string') {
+          const cleanTeks = item.replace(/^[A-Za-z0-9]+[\.\)]\s*/, '');
+          return { huruf, teks: cleanTeks };
+        }
+        const rawTeks = item?.teks || item?.pernyataan || item?.text || '';
+        const cleanTeks = String(rawTeks).replace(/^[A-Za-z0-9]+[\.\)]\s*/, '');
+        return { huruf, teks: cleanTeks };
+      });
+    }
+
+    function normalizeBsStatements(pernyataanList) {
+      if (!Array.isArray(pernyataanList)) return [];
+      return pernyataanList.map((item, idx) => {
+        const huruf = getAlphabetLabel(idx);
+        const rawTeks = typeof item === 'string' ? item : (item?.teks || item?.pernyataan || '');
+        const cleanTeks = String(rawTeks).replace(/^[A-Za-z0-9]+[\.\)]\s*/, '');
+        const jawaban = typeof item === 'object' && item?.jawaban
+          ? (/benar/i.test(String(item.jawaban)) ? 'Benar' : 'Salah')
+          : 'Benar';
+        return { huruf, teks: cleanTeks, jawaban };
+      });
+    }
+
+    /* ==========================================================================
+       2. MANAJEMEN KONEKSI GEMINI AI & VERCEL
+       ========================================================================== */
+    function isExternalDeploymentHost() {
+      const host = window.location.hostname || '';
+      return host.includes('vercel.app') || (host !== '' && !host.includes('localhost') && !host.includes('127.0.0.1') && !host.includes('googleusercontent') && !host.includes('webcontainer'));
+    }
+
+    function getEffectiveApiKey() {
+      const inputEl = document.getElementById('custom-api-key');
+      const rawTyped = inputEl ? inputEl.value : '';
+      const typed = rawTyped.replace(/^["']+|["']+$/g, '').replace(/\s+/g, '');
+      if (typed) return typed;
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY_API);
+        if (saved && saved.trim()) {
+          return saved.replace(/^["']+|["']+$/g, '').replace(/\s+/g, '');
+        }
+      } catch (e) {}
+      if (DEFAULT_ENV_API_KEY && DEFAULT_ENV_API_KEY.trim()) {
+        return DEFAULT_ENV_API_KEY.replace(/^["']+|["']+$/g, '').replace(/\s+/g, '');
+      }
+      return '';
+    }
+
+    function updateApiKeyUiState() {
+      const statusEl = document.getElementById('api-key-status');
+      const headerStatusEl = document.getElementById('header-ai-status-text');
+      const clearBtn = document.getElementById('btn-clear-key');
+      const detailsEl = document.getElementById('api-key-details');
+
+      if (EMBEDDED_VERCEL_MODE && DEFAULT_ENV_API_KEY) {
+        if (detailsEl) detailsEl.classList.add('hidden');
+        if (headerStatusEl) headerStatusEl.textContent = 'Gemini AI • Aktif (Siap Digunakan)';
+        return;
+      }
+
+      const activeKey = getEffectiveApiKey();
+      if (activeKey) {
+        if (statusEl) statusEl.textContent = 'Status: API Key Tersimpan di Browser';
+        if (headerStatusEl) headerStatusEl.textContent = 'Gemini AI • Terhubung (API Key)';
+        if (clearBtn) clearBtn.classList.remove('hidden');
+      } else if (isExternalDeploymentHost()) {
+        if (statusEl) statusEl.textContent = 'Mode: Jalur Server Vercel (/api/gemini)';
+        if (headerStatusEl) headerStatusEl.textContent = 'Gemini AI • Server Vercel';
+        if (clearBtn) clearBtn.classList.add('hidden');
+      } else {
+        if (statusEl) statusEl.textContent = 'Mode: Pratinjau Otomatis Tanpa API Key';
+        if (headerStatusEl) headerStatusEl.textContent = 'Gemini AI • Siap Tanpa API Key';
+        if (clearBtn) clearBtn.classList.add('hidden');
+      }
+    }
+
+    function focusApiKeySettings(openDetails = true) {
+      const detailsEl = document.getElementById('api-key-details');
+      if (!detailsEl || detailsEl.classList.contains('hidden')) {
+        showToast('Gemini AI sudah aktif otomatis untuk membuat soal.', 'success');
+        return;
+      }
+      if (openDetails) {
+        detailsEl.open = true;
+      }
+      detailsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const inputEl = document.getElementById('custom-api-key');
+      if (inputEl && openDetails) {
+        setTimeout(() => inputEl.focus(), 250);
+      }
+    }
+
+    function exportStandaloneVercelHtml() {
+      const key = getEffectiveApiKey();
+      if (!key) {
+        showToast('Tempelkan Gemini API Key (format AQ....) terlebih dahulu pada kolom di atas.', 'error');
+        const inputEl = document.getElementById('custom-api-key');
+        if (inputEl) inputEl.focus();
+        return;
+      }
+
+      try {
+        localStorage.setItem(STORAGE_KEY_API, key);
+      } catch (e) {}
+      updateApiKeyUiState();
+
+      const clonedRoot = document.documentElement.cloneNode(true);
+      const clonedToast = clonedRoot.querySelector('#app-toast');
+      if (clonedToast) clonedToast.remove();
+
+      const clonedEmpty = clonedRoot.querySelector('#empty-state');
+      if (clonedEmpty) clonedEmpty.classList.remove('hidden');
+
+      ['#result-toolbar', '#document-container', '#quiz-container', '#loading-state', '#validation-box'].forEach((sel) => {
+        const el = clonedRoot.querySelector(sel);
+        if (el) {
+          el.classList.add('hidden');
+          if (sel === '#document-container' || sel === '#quiz-container') {
+            el.innerHTML = '';
+          }
+        }
+      });
+
+      const clonedKeyInput = clonedRoot.querySelector('#custom-api-key');
+      if (clonedKeyInput) clonedKeyInput.setAttribute('value', '');
+
+      let rawHtml = '<!DOCTYPE html>\n' + clonedRoot.outerHTML;
+      const escapedKey = key.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+      rawHtml = rawHtml.replace(/const DEFAULT_ENV_API_KEY = '[^']*';/, `const DEFAULT_ENV_API_KEY = '${escapedKey}';`);
+      rawHtml = rawHtml.replace(/const EMBEDDED_VERCEL_MODE = false;/, 'const EMBEDDED_VERCEL_MODE = true;');
+
+      const blob = new Blob([rawHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      showToast('File index.html siap Vercel berhasil diunduh! Silakan unggah ke Vercel.', 'success');
+    }
+
+    function downloadVercelBackendFile() {
+      const blob = new Blob([VERCEL_SERVERLESS_CODE], { type: 'application/javascript;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'gemini.js';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('File gemini.js diunduh. Simpan di dalam folder api/gemini.js proyek Vercel Anda.', 'success');
+    }
+
+    function copyVercelBackendCode() {
+      const ta = document.createElement('textarea');
+      ta.value = VERCEL_SERVERLESS_CODE;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Kode backend api/gemini.js berhasil disalin ke clipboard.', 'success');
+      } catch (e) {
+        showToast('Gagal menyalin otomatis. Silakan gunakan tombol Unduh api/gemini.js.', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    /* ==========================================================================
+       3. MANAJEMEN LOGO KOP SURAT (PEMKAB KIRI & SEKOLAH KANAN)
+       ========================================================================== */
+    function loadSavedLogos() {
+      try {
+        logoPemkabData = localStorage.getItem(STORAGE_LOGO_PEMKAB) || '';
+        logoSekolahData = localStorage.getItem(STORAGE_LOGO_SEKOLAH) || '';
+      } catch (e) {}
+      updateLogoPreviewSlots();
+    }
+
+    function saveLogoToStorage(side, value) {
+      if (side === 'pemkab') {
+        logoPemkabData = value || '';
+        try {
+          if (value) localStorage.setItem(STORAGE_LOGO_PEMKAB, value);
+          else localStorage.removeItem(STORAGE_LOGO_PEMKAB);
+        } catch (e) {}
+      } else {
+        logoSekolahData = value || '';
+        try {
+          if (value) localStorage.setItem(STORAGE_LOGO_SEKOLAH, value);
+          else localStorage.removeItem(STORAGE_LOGO_SEKOLAH);
+        } catch (e) {}
+      }
+      updateLogoPreviewSlots();
+      if (currentGeneratedData && currentMeta) {
+        renderDocument();
+      }
+    }
+
+    function updateLogoPreviewSlots() {
+      const thumbPemkab = document.getElementById('thumb-logo-pemkab');
+      const thumbSekolah = document.getElementById('thumb-logo-sekolah');
+      const clearPemkabBtn = document.getElementById('btn-clear-logo-pemkab');
+      const clearSekolahBtn = document.getElementById('btn-clear-logo-sekolah');
+      const slotPemkab = document.getElementById('kop-logo-pemkab-slot');
+      const slotSekolah = document.getElementById('kop-logo-sekolah-slot');
+
+      if (thumbPemkab) {
+        thumbPemkab.innerHTML = logoPemkabData
+          ? `<img src="${escapeHtml(logoPemkabData)}" alt="Logo Pemkab" class="w-full h-full object-contain" />`
+          : 'Kiri';
+      }
+      if (clearPemkabBtn) {
+        clearPemkabBtn.classList.toggle('hidden', !logoPemkabData);
+      }
+
+      if (thumbSekolah) {
+        thumbSekolah.innerHTML = logoSekolahData
+          ? `<img src="${escapeHtml(logoSekolahData)}" alt="Logo Sekolah" class="w-full h-full object-contain" />`
+          : 'Kanan';
+      }
+      if (clearSekolahBtn) {
+        clearSekolahBtn.classList.toggle('hidden', !logoSekolahData);
+      }
+
+      if (slotPemkab) {
+        slotPemkab.innerHTML = logoPemkabData
+          ? `<img src="${escapeHtml(logoPemkabData)}" alt="Logo Pemkab" style="width: 62px; height: 62px; object-fit: contain; margin: 0 auto;" />`
+          : `<button type="button" onclick="document.getElementById('input-logo-pemkab').click()" class="no-print text-[10px] text-slate-400 hover:text-blue-900 border border-dashed border-slate-300 rounded-lg px-2 py-3 cursor-pointer">+ Logo Pemkab</button>`;
+      }
+      if (slotSekolah) {
+        slotSekolah.innerHTML = logoSekolahData
+          ? `<img src="${escapeHtml(logoSekolahData)}" alt="Logo Sekolah" style="width: 62px; height: 62px; object-fit: contain; margin: 0 auto;" />`
+          : `<button type="button" onclick="document.getElementById('input-logo-sekolah').click()" class="no-print text-[10px] text-slate-400 hover:text-blue-900 border border-dashed border-slate-300 rounded-lg px-2 py-3 cursor-pointer">+ Logo Sekolah</button>`;
+      }
+    }
+
+    function handleLogoFileUpload(side, file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        const result = ev.target?.result || '';
+        if (result) {
+          saveLogoToStorage(side, result);
+          showToast(`Logo ${side === 'pemkab' ? 'Pemerintah Kabupaten' : 'Sekolah'} berhasil dipasang.`, 'success');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    /* ==========================================================================
+       4. KOMUNIKASI GEMINI AI (TEKS SOAL & ILUSTRASI GAMBAR OTOMATIS)
+       ========================================================================== */
+    let loadingTimerInterval = null;
+
+    function startLoadingTimer() {
+      stopLoadingTimer();
+      const startTime = Date.now();
+      const badge = document.getElementById('loading-timer-badge');
+      if (badge) badge.textContent = 'Waktu proses: 0 detik';
+      loadingTimerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        if (badge) badge.textContent = `Waktu proses: ${elapsed} detik`;
+      }, 1000);
+    }
+
+    function stopLoadingTimer() {
+      if (loadingTimerInterval) {
+        clearInterval(loadingTimerInterval);
+        loadingTimerInterval = null;
+      }
+    }
+
+    async function fetchWithBackoff(url, options, maxRetries = 1, timeoutMs = 28000) {
+      let delay = 450;
+      for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        const controller = new AbortController();
+        const timerId = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+          const resp = await fetch(url, { ...options, signal: controller.signal });
+          clearTimeout(timerId);
+          if (resp.status === 429 || resp.status >= 500) {
+            if (attempt < maxRetries) {
+              await new Promise((r) => setTimeout(r, delay));
+              delay *= 2;
+              continue;
+            }
+          }
+          return resp;
+        } catch (err) {
+          clearTimeout(timerId);
+          if (err && err.name === 'AbortError') {
+            if (attempt < maxRetries) continue;
+            throw new Error('Koneksi ke Gemini AI melebihi batas waktu. Silakan coba kembali atau kurangi jumlah butir soal.');
+          }
+          if (attempt < maxRetries) {
+            await new Promise((r) => setTimeout(r, delay));
+            delay *= 2;
+            continue;
+          }
+          throw err;
+        }
+      }
+      return null;
+    }
+
+    async function invokeGeminiEndpoint(modelName, payload, timeoutMs = 28000) {
+      const apiKey = getEffectiveApiKey();
+
+      if (!apiKey && isExternalDeploymentHost() && window.location.protocol !== 'file:') {
+        const proxyResp = await fetchWithBackoff('/api/gemini', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ model: modelName, payload })
+        }, 1, timeoutMs);
+
+        if (proxyResp && proxyResp.status === 404) {
+          focusApiKeySettings(true);
+          throw new Error('Di Vercel, tempelkan Gemini API Key (format AQ.) Anda sekali di panel kiri lalu klik "Unduh index.html Siap Upload Vercel" (atau pasang folder api/gemini.js).');
+        }
+        return proxyResp;
+      }
+
+      if (apiKey) {
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelName)}:generateContent`;
+        let preferredAuth = 'header';
+        try {
+          preferredAuth = sessionStorage.getItem('smp_gemini_auth_mode') || 'header';
+        } catch (e) {}
+
+        if (preferredAuth === 'query') {
+          const queryEndpoint = `${endpoint}?key=${encodeURIComponent(apiKey)}`;
+          return await fetchWithBackoff(queryEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }, 1, timeoutMs);
+        }
+
+        const headerResp = await fetchWithBackoff(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': apiKey
+          },
+          body: JSON.stringify(payload)
+        }, 1, timeoutMs);
+
+        if (headerResp && headerResp.ok) {
+          try { sessionStorage.setItem('smp_gemini_auth_mode', 'header'); } catch (e) {}
+          return headerResp;
+        }
+
+        if (headerResp && (headerResp.status === 401 || headerResp.status === 403)) {
+          const queryEndpoint = `${endpoint}?key=${encodeURIComponent(apiKey)}`;
+          const queryResp = await fetchWithBackoff(queryEndpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }, 0, timeoutMs);
+          if (queryResp && queryResp.ok) {
+            try { sessionStorage.setItem('smp_gemini_auth_mode', 'query'); } catch (e) {}
+          }
+          return queryResp;
+        }
+        return headerResp;
+      }
+
+      // Jalur otomatis lingkungan pratinjau bawaan
+      const previewEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(modelName)}:generateContent?key=`;
+      return await fetchWithBackoff(previewEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }, 1, timeoutMs);
+    }
+
+    async function generateQuestionImageDataUrl(promptText) {
+      const cleanPrompt = `Clean educational black-and-white textbook diagram illustration for Indonesian junior high school (SMP) exam worksheet on pure white background, clear lines, high contrast, no watermark, no random text: ${promptText}`;
+
+      const imageModels = ['gemini-3.1-flash-lite-image', 'gemini-2.5-flash-image'];
+
+      for (const imgModel of imageModels) {
+        try {
+          const resp = await invokeGeminiEndpoint(imgModel, {
+            contents: [{ parts: [{ text: cleanPrompt }] }],
+            generationConfig: {
+              responseModalities: ['TEXT', 'IMAGE']
+            }
+          }, 16000);
+          if (!resp || !resp.ok) continue;
+          const data = await resp.json();
+          const parts = data?.candidates?.[0]?.content?.parts || [];
+          for (const part of parts) {
+            const inline = part.inlineData || part.inline_data;
+            if (inline && inline.data) {
+              const mime = inline.mimeType || inline.mime_type || 'image/png';
+              if (String(mime).startsWith('image/')) {
+                return `data:${mime};base64,${inline.data}`;
+              }
+            }
+          }
+        } catch (err) {
+          // Lanjut ke model gambar cadangan berikutnya
+        }
+      }
+      return '';
+    }
+
+    async function callGeminiApi(meta) {
+      const isPai = /agama islam|pai/i.test(meta.mapel);
+      const imageTypes = meta.imageTypes || {};
+      const sectionLabels = {
+        pg_sederhana: 'Pilihan Ganda Sederhana (pg_sederhana)',
+        pg_kompleks: 'Pilihan Ganda Kompleks (pg_kompleks)',
+        benar_salah: 'Benar / Salah (benar_salah)',
+        menjodohkan: 'Menjodohkan (menjodohkan)',
+        esai: 'Esai / Uraian (esai)'
+      };
+      const enabledImageKeys = Object.keys(sectionLabels).filter((k) => Boolean(imageTypes[k]));
+      const imageRuleText = enabledImageKeys.length > 0
+        ? `6. Ilustrasi Gambar: HANYA aktif untuk kategori: ${enabledImageKeys.map((k) => sectionLabels[k]).join(', ')}. Pilih 1 butir paling relevan per kategori terpilih, isi "perlu_gambar": true dan tulis deskripsi visual singkat (maks 15 kata bahasa Inggris) pada "deskripsi_gambar". Kategori lain WAJIB "perlu_gambar": false dan "deskripsi_gambar": "".`
+        : `6. Ilustrasi Gambar: Nonaktif. Wajib isi "perlu_gambar": false dan "deskripsi_gambar": "" pada semua soal.`;
+
+      const systemInstruction = `Anda adalah Guru Pengembang Asesmen SMP Kurikulum Merdeka (Fase D) & AKM.
+Susun soal bermutu tinggi, kontekstual, ringkas, padat, dan akurat sesuai kaidah penulisan soal baku.
+
+ATURAN FORMAT:
+1. Rumus Matematika & IPA: Gunakan tag HTML <sup>2</sup> untuk pangkat, <sub>2</sub> untuk indeks kimia, serta simbol baku (×, ÷, ≤, ≥, ≠, √, π, Δ, °C) dan satuan SI. Jangan gunakan LaTeX ($...$).
+${isPai ? '2. PAI: Sertakan minimal 2 butir dengan petikan ayat Al-Qur\'an/Hadis berharakat lengkap pada "teks_arab" serta nama surat & ayat pada "sumber_arab".' : '2. Kosongkan "teks_arab" dan "sumber_arab" ("").'}
+3. PG Kompleks: Tepat ${meta.pernyataanPgk} pernyataan pada "opsi", kunci >1 huruf kapital (["A","C"]).
+4. Benar / Salah: Tepat ${meta.pernyataanBs} pernyataan pada "pernyataan" dengan "jawaban" ("Benar" atau "Salah").
+5. Menjodohkan: Tepat ${meta.premisMenjodohkan} item "premis" ("1","2",...) dan ${meta.premisMenjodohkan + 1} item "respon" ("A","B",...), serta objek "kunci_pasangan".
+${imageRuleText}
+7. Tulis indikator_soal dan pembahasan secara ringkas (1-2 kalimat) agar efisien. Keluarkan HANYA JSON valid.`;
+
+      const userPrompt = `Buat paket soal SMP Kurikulum Merdeka:
+- Mapel: ${meta.mapel} | Kelas: ${meta.kelas} SMP (Fase D)
+- Materi: ${meta.materi} | Kesulitan: ${meta.kesulitan}
+- Jumlah soal: pg_sederhana=${meta.jmlPgSederhana}, pg_kompleks=${meta.jmlPgKompleks} (${meta.pernyataanPgk} opsi), benar_salah=${meta.jmlBenarSalah} (${meta.pernyataanBs} pernyataan), menjodohkan=${meta.jmlMenjodohkan} (${meta.premisMenjodohkan} premis & ${meta.premisMenjodohkan + 1} respon), esai=${meta.jmlEsai}.
+
+Skema JSON:
+{
+  "pg_sederhana": [{ "level_kognitif": "L1 (C2)", "indikator_soal": "...", "stimulus": "", "teks_arab": "", "sumber_arab": "", "perlu_gambar": false, "deskripsi_gambar": "", "pertanyaan": "...", "opsi": { "A": "...", "B": "...", "C": "...", "D": "..." }, "kunci": "A", "pembahasan": "..." }],
+  "pg_kompleks": [{ "level_kognitif": "L3 (C4)", "indikator_soal": "...", "stimulus": "", "teks_arab": "", "sumber_arab": "", "perlu_gambar": false, "deskripsi_gambar": "", "pertanyaan": "...", "opsi": ["...", "..."], "kunci": ["A", "C"], "pembahasan": "..." }],
+  "benar_salah": [{ "level_kognitif": "L2 (C3)", "indikator_soal": "...", "stimulus": "", "teks_arab": "", "sumber_arab": "", "perlu_gambar": false, "deskripsi_gambar": "", "pertanyaan": "...", "pernyataan": [{ "teks": "...", "jawaban": "Benar" }], "pembahasan": "..." }],
+  "menjodohkan": [{ "level_kognitif": "L2 (C3)", "indikator_soal": "...", "stimulus": "", "perlu_gambar": false, "deskripsi_gambar": "", "pertanyaan": "...", "premis": [{ "id": "1", "teks": "..." }], "respon": [{ "id": "A", "teks": "..." }], "kunci_pasangan": { "1": "B" }, "pembahasan": "..." }],
+  "esai": [{ "level_kognitif": "L3 (C5)", "indikator_soal": "...", "stimulus": "", "teks_arab": "", "sumber_arab": "", "perlu_gambar": false, "deskripsi_gambar": "", "pertanyaan": "...", "kunci_jawaban": "...", "rubrik_skor": [{ "kriteria": "...", "skor": 4 }], "skor_maksimal": 4 }]
+}`;
+
+      const hasCustomKey = Boolean(getEffectiveApiKey());
+      let cachedModel = '';
+      try { cachedModel = sessionStorage.getItem('smp_gemini_fast_model') || ''; } catch (e) {}
+
+      const modelConfigs = hasCustomKey
+        ? [
+            {
+              model: 'gemini-2.5-flash',
+              payload: {
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+                generationConfig: {
+                  temperature: 0.45,
+                  responseMimeType: 'application/json',
+                  thinkingConfig: { thinkingBudget: 0 }
+                }
+              }
+            },
+            {
+              model: 'gemini-3-flash-preview',
+              payload: {
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+                generationConfig: {
+                  temperature: 0.45,
+                  responseMimeType: 'application/json'
+                }
+              }
+            },
+            {
+              model: 'gemini-2.5-flash-lite',
+              payload: {
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+                generationConfig: {
+                  temperature: 0.45,
+                  responseMimeType: 'application/json'
+                }
+              }
+            }
+          ]
+        : [
+            {
+              model: 'gemini-3-flash-preview',
+              payload: {
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+                generationConfig: {
+                  temperature: 0.45,
+                  responseMimeType: 'application/json'
+                }
+              }
+            },
+            {
+              model: 'gemini-2.5-flash',
+              payload: {
+                systemInstruction: { parts: [{ text: systemInstruction }] },
+                contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+                generationConfig: {
+                  temperature: 0.45,
+                  responseMimeType: 'application/json',
+                  thinkingConfig: { thinkingBudget: 0 }
+                }
+              }
+            }
+          ];
+
+      if (cachedModel) {
+        modelConfigs.sort((a, b) => (a.model === cachedModel ? -1 : b.model === cachedModel ? 1 : 0));
+      }
+
+      let resp = null;
+      let lastErrMsg = '';
+
+      for (const cfg of modelConfigs) {
+        resp = await invokeGeminiEndpoint(cfg.model, cfg.payload, 30000);
+        if (resp && resp.ok) {
+          try { sessionStorage.setItem('smp_gemini_fast_model', cfg.model); } catch (e) {}
+          break;
+        }
+
+        const errBody = resp ? await resp.json().catch(() => ({})) : {};
+        lastErrMsg = errBody?.error?.message || `Gagal memanggil Gemini API (Status ${resp ? resp.status : 'Jaringan'}).`;
+
+        if (resp && (resp.status === 404 || resp.status === 400 || resp.status === 403)) {
+          continue;
+        }
+        break;
+      }
+
+      if (!resp || !resp.ok) {
+        if (resp && (resp.status === 401 || resp.status === 403)) {
+          throw new Error(`Autentikasi API Key (${resp.status}): ${lastErrMsg}. Buka Google Cloud Console > Credentials > klik kunci AQ. Anda > pada "API restrictions" pilih "Generative Language API".`);
+        }
+        throw new Error(lastErrMsg || 'Gagal memanggil Gemini API.');
+      }
+
+      const result = await resp.json();
+      const rawText = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      if (!rawText) {
+        throw new Error('Respons dari Gemini AI kosong. Silakan coba kembali.');
+      }
+
+      const cleanedJson = rawText.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+      let parsed;
+      try {
+        parsed = JSON.parse(cleanedJson);
+      } catch (parseErr) {
+        const firstBrace = cleanedJson.indexOf('{');
+        const lastBrace = cleanedJson.lastIndexOf('}');
+        if (firstBrace !== -1 && lastBrace !== -1) {
+          parsed = JSON.parse(cleanedJson.slice(firstBrace, lastBrace + 1));
+        } else {
+          throw new Error('Format JSON hasil AI tidak valid. Silakan klik Buat Paket Soal Sekarang lagi.');
+        }
+      }
+
+      // Normalisasi penomoran dan struktur array secara aman
+      let runningNumber = 1;
+      const safeArray = (val) => (Array.isArray(val) ? val : []);
+      const pgSederhana = safeArray(parsed.pg_sederhana).map((q) => ({
+        ...q,
+        nomor: runningNumber++,
+        image_data_url: '',
+        image_loading: false
+      }));
+      const pgKompleks = safeArray(parsed.pg_kompleks).map((q) => ({
+        ...q,
+        nomor: runningNumber++,
+        opsi: normalizePgkOptions(q.opsi),
+        image_data_url: '',
+        image_loading: false
+      }));
+      const benarSalah = safeArray(parsed.benar_salah).map((q) => ({
+        ...q,
+        nomor: runningNumber++,
+        pernyataan: normalizeBsStatements(q.pernyataan),
+        image_data_url: '',
+        image_loading: false
+      }));
+      const menjodohkan = safeArray(parsed.menjodohkan).map((q) => ({
+        ...q,
+        nomor: runningNumber++,
+        image_data_url: '',
+        image_loading: false
+      }));
+      const esai = safeArray(parsed.esai).map((q) => ({
+        ...q,
+        nomor: runningNumber++,
+        image_data_url: '',
+        image_loading: false
+      }));
+
+      const structured = {
+        pg_sederhana: pgSederhana,
+        pg_kompleks: pgKompleks,
+        benar_salah: benarSalah,
+        menjodohkan: menjodohkan,
+        esai: esai
+      };
+
+      // Siapkan daftar tugas gambar untuk diproses paralel setelah naskah soal langsung tampil
+      const imageTasks = [];
+      if (enabledImageKeys.length > 0) {
+        enabledImageKeys.forEach((secKey) => {
+          const items = structured[secKey] || [];
+          if (items.length === 0) return;
+
+          let addedForSection = 0;
+          items.forEach((item, idx) => {
+            if (item.perlu_gambar && item.deskripsi_gambar && addedForSection < 1) {
+              item.image_loading = true;
+              imageTasks.push({ secKey, idx, prompt: item.deskripsi_gambar });
+              addedForSection++;
+            }
+          });
+
+          if (addedForSection === 0) {
+            const firstItem = items[0];
+            firstItem.perlu_gambar = true;
+            firstItem.image_loading = true;
+            firstItem.deskripsi_gambar = `${meta.mapel} SMP grade ${meta.kelas} educational diagram for ${meta.materi}: ${firstItem.pertanyaan}`;
+            imageTasks.push({ secKey, idx: 0, prompt: firstItem.deskripsi_gambar });
+          }
+        });
+      }
+
+      return { structured, imageTasks };
+    }
+
+    async function processBackgroundImages(imageTasks, targetDataRef) {
+      if (!imageTasks || imageTasks.length === 0) return;
+      await Promise.all(
+        imageTasks.map(async (task) => {
+          const imgDataUrl = await generateQuestionImageDataUrl(task.prompt);
+          if (currentGeneratedData !== targetDataRef) return;
+          const targetItem = targetDataRef?.[task.secKey]?.[task.idx];
+          if (targetItem) {
+            targetItem.image_loading = false;
+            if (imgDataUrl) {
+              targetItem.image_data_url = imgDataUrl;
+            }
+            renderDocument();
+            switchTab(currentTab);
+          }
+        })
+      );
+    }
+
+    async function regenerateSingleQuestionImage(sectionKey, idx) {
+      if (!currentGeneratedData || !currentGeneratedData[sectionKey] || !currentGeneratedData[sectionKey][idx]) return;
+      const item = currentGeneratedData[sectionKey][idx];
+      const prompt = item.deskripsi_gambar || `${currentMeta?.mapel || 'SMP'} diagram for: ${item.pertanyaan}`;
+      showToast(`Sedang membuat ulang gambar soal nomor ${item.nomor}...`, 'info');
+      const newUrl = await generateQuestionImageDataUrl(prompt);
+      if (newUrl) {
+        item.image_data_url = newUrl;
+        renderDocument();
+        showToast(`Gambar soal nomor ${item.nomor} berhasil diperbarui.`, 'success');
+      } else {
+        showToast('Gagal membuat ulang gambar. Silakan coba beberapa saat lagi.', 'error');
+      }
+    }
+
+    function removeSingleQuestionImage(sectionKey, idx) {
+      if (!currentGeneratedData || !currentGeneratedData[sectionKey] || !currentGeneratedData[sectionKey][idx]) return;
+      currentGeneratedData[sectionKey][idx].image_data_url = '';
+      renderDocument();
+      showToast('Ilustrasi gambar dihapus dari butir soal.', 'info');
+    }
+
+    /* ==========================================================================
+       5. PENANGANAN FORMULIR & RESET
+       ========================================================================== */
+    function updateTotalBadge() {
+      const pgS = parseInt(document.getElementById('jml-pg-sederhana')?.value || '0', 10) || 0;
+      const pgK = parseInt(document.getElementById('jml-pg-kompleks')?.value || '0', 10) || 0;
+      const bs = parseInt(document.getElementById('jml-benar-salah')?.value || '0', 10) || 0;
+      const mj = parseInt(document.getElementById('jml-menjodohkan')?.value || '0', 10) || 0;
+      const es = parseInt(document.getElementById('jml-esai')?.value || '0', 10) || 0;
+      const total = pgS + pgK + bs + mj + es;
+      const badge = document.getElementById('total-soal-badge');
+      if (badge) {
+        badge.textContent = `${total} Butir Soal`;
+      }
+    }
+
+    async function handleGenerateSoal(e) {
+      e.preventDefault();
+
+      const mapelSelect = document.getElementById('mapel-select');
+      const mapelCustom = document.getElementById('mapel-custom');
+      const kelasSelect = document.getElementById('kelas-select');
+      const materiInput = document.getElementById('materi-input');
+      const kesulitanSelect = document.getElementById('kesulitan-select');
+
+      const mapelVal = mapelSelect.value === '__CUSTOM__' ? mapelCustom.value.trim() : mapelSelect.value.trim();
+      const kelasVal = kelasSelect.value.trim();
+      const materiVal = materiInput.value.trim();
+      const kesulitanVal = kesulitanSelect.value.trim();
+
+      const jmlPgSederhana = Math.max(0, parseInt(document.getElementById('jml-pg-sederhana').value || '0', 10));
+      const jmlPgKompleks = Math.max(0, parseInt(document.getElementById('jml-pg-kompleks').value || '0', 10));
+      const pernyataanPgk = Math.max(2, parseInt(document.getElementById('pernyataan-pgk').value || '4', 10));
+      const jmlBenarSalah = Math.max(0, parseInt(document.getElementById('jml-benar-salah').value || '0', 10));
+      const pernyataanBs = Math.max(2, parseInt(document.getElementById('pernyataan-bs').value || '4', 10));
+      const jmlMenjodohkan = Math.max(0, parseInt(document.getElementById('jml-menjodohkan').value || '0', 10));
+      const premisMenjodohkan = Math.max(2, parseInt(document.getElementById('premis-menjodohkan').value || '3', 10));
+      const jmlEsai = Math.max(0, parseInt(document.getElementById('jml-esai').value || '0', 10));
+      const totalSoal = jmlPgSederhana + jmlPgKompleks + jmlBenarSalah + jmlMenjodohkan + jmlEsai;
+
+      const imageTypes = {
+        pg_sederhana: Boolean(document.getElementById('img-pg-sederhana')?.checked),
+        pg_kompleks: Boolean(document.getElementById('img-pg-kompleks')?.checked),
+        benar_salah: Boolean(document.getElementById('img-benar-salah')?.checked),
+        menjodohkan: Boolean(document.getElementById('img-menjodohkan')?.checked),
+        esai: Boolean(document.getElementById('img-esai')?.checked)
+      };
+
+      const errors = [];
+      if (!mapelVal) errors.push('Pilih atau isi Mata Pelajaran.');
+      if (!kelasVal) errors.push('Pilih Kelas / Fase SMP.');
+      if (!materiVal) errors.push('Isi Materi Pokok / Topik ujian.');
+      if (!kesulitanVal) errors.push('Pilih Tingkat Kesulitan soal.');
+      if (totalSoal <= 0) errors.push('Minimal harus ada 1 butir soal yang dibuat.');
+      if (totalSoal > 60) errors.push('Maksimal 60 butir soal dalam satu kali pembuatan agar kualitas optimal.');
+
+      const valBox = document.getElementById('validation-box');
+      const valList = document.getElementById('validation-list');
+      if (errors.length > 0) {
+        valList.innerHTML = errors.map((err) => `<li>${escapeHtml(err)}</li>`).join('');
+        valBox.classList.remove('hidden');
+        valBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+      valBox.classList.add('hidden');
+
+      const meta = {
+        mapel: mapelVal,
+        kelas: kelasVal,
+        materi: materiVal,
+        kesulitan: kesulitanVal,
+        jmlPgSederhana,
+        jmlPgKompleks,
+        pernyataanPgk,
+        jmlBenarSalah,
+        pernyataanBs,
+        jmlMenjodohkan,
+        premisMenjodohkan,
+        jmlEsai,
+        totalSoal,
+        imageTypes
+      };
+
+      const btnGenerate = document.getElementById('btn-generate');
+      const emptyState = document.getElementById('empty-state');
+      const loadingState = document.getElementById('loading-state');
+      const docContainer = document.getElementById('document-container');
+      const quizContainer = document.getElementById('quiz-container');
+      const toolbar = document.getElementById('result-toolbar');
+      const stepEl = document.getElementById('loading-step-text');
+
+      btnGenerate.disabled = true;
+      emptyState.classList.add('hidden');
+      docContainer.classList.add('hidden');
+      quizContainer.classList.add('hidden');
+      toolbar.classList.add('hidden');
+      loadingState.classList.remove('hidden');
+      if (stepEl) stepEl.textContent = 'Menyusun stimulus kontekstual, butir soal, kunci jawaban, dan kisi-kisi...';
+      startLoadingTimer();
+
+      try {
+        const { structured, imageTasks } = await callGeminiApi(meta);
+        stopLoadingTimer();
+        currentMeta = meta;
+        currentGeneratedData = structured;
+        currentTab = 'semua';
+
+        loadingState.classList.add('hidden');
+        toolbar.classList.remove('hidden');
+        docContainer.classList.remove('hidden');
+        renderDocument();
+        switchTab('semua');
+
+        if (imageTasks.length > 0) {
+          showToast(`Naskah soal tampil! Sedang membuat ${imageTasks.length} ilustrasi gambar AI di latar belakang...`, 'info');
+          processBackgroundImages(imageTasks, structured);
+        } else {
+          showToast('Paket soal, kunci jawaban, kisi-kisi & kartu soal berhasil dibuat!', 'success');
+        }
+      } catch (err) {
+        stopLoadingTimer();
+        loadingState.classList.add('hidden');
+        if (currentGeneratedData) {
+          toolbar.classList.remove('hidden');
+          docContainer.classList.remove('hidden');
+        } else {
+          emptyState.classList.remove('hidden');
+        }
+        showToast(err.message || 'Terjadi kesalahan saat menyusun soal.', 'error');
+      } finally {
+        btnGenerate.disabled = false;
+      }
+    }
+
+    function resetAllWorkspace() {
+      const form = document.getElementById('soal-form');
+      if (form) form.reset();
+
+      const mapelCustom = document.getElementById('mapel-custom');
+      if (mapelCustom) {
+        mapelCustom.value = '';
+        mapelCustom.classList.add('hidden');
+      }
+
+      const valBox = document.getElementById('validation-box');
+      if (valBox) valBox.classList.add('hidden');
+
+      currentGeneratedData = null;
+      currentMeta = null;
+      currentTab = 'semua';
+
+      document.getElementById('result-toolbar')?.classList.add('hidden');
+      document.getElementById('document-container')?.classList.add('hidden');
+      document.getElementById('quiz-container')?.classList.add('hidden');
+      document.getElementById('loading-state')?.classList.add('hidden');
+      document.getElementById('empty-state')?.classList.remove('hidden');
+
+      updateTotalBadge();
+      updateLogoPreviewSlots();
+      showToast('Formulir dan lembar kerja telah dikosongkan. Siap menyusun soal baru.', 'info');
+    }
+
+    /* ==========================================================================
+       6. PERENDER KOMPONEN DOKUMEN (KOP SURAT, ARAB PAI, GAMBAR, KISI-KISI)
+       ========================================================================== */
+    function getCognitiveBadgeHtml(levelStr) {
+      if (!levelStr) return '';
+      const isHots = /L3|C4|C5|C6/i.test(levelStr);
+      const badgeClass = isHots
+        ? 'bg-amber-100 text-amber-900 border-amber-300'
+        : 'bg-slate-100 text-slate-700 border-slate-300';
+      return `<span class="ui-badge no-print inline-block ml-1.5 px-2 py-0.5 rounded text-[10px] font-semibold border ${badgeClass}">${escapeHtml(levelStr)}</span>`;
+    }
+
+    function renderArabicBlockHtml(teksArab, sumberArab) {
+      if (!teksArab || !String(teksArab).trim()) return '';
+      return `
+        <div style="margin: 6px 0 8px 0; padding: 8px 12px; background-color: #f8fafc; border-right: 3px solid #0f172a; border-radius: 4px;">
+          <div class="arabic-text">${escapeHtml(teksArab)}</div>
+          ${sumberArab ? `<div style="font-size: 9.5pt; font-style: italic; color: #334155; text-align: right; margin-top: 2px;">(${escapeHtml(sumberArab)})</div>` : ''}
+        </div>
+      `;
+    }
+
+    function renderQuestionImageHtml(sectionKey, idx, imageUrl, deskripsiGambar, isLoading = false) {
+      if (isLoading && !imageUrl) {
+        return `
+          <div class="no-print" style="margin: 6px 0 8px 0; padding: 8px 12px; border: 1px dashed #93c5fd; background-color: #eff6ff; border-radius: 6px; font-size: 9.5pt; color: #1e3a8a; display: inline-flex; align-items: center; gap: 8px;">
+            <span>Sedang membuat ilustrasi gambar AI untuk soal ini...</span>
+          </div>
+        `;
+      }
+      if (!imageUrl) return '';
+      return `
+        <div style="margin: 6px 0 8px 0; text-align: left;">
+          <img src="${escapeHtml(imageUrl)}" alt="Ilustrasi Soal" style="max-width: 260px; max-height: 200px; width: auto; height: auto; border: 1px solid #cbd5e1; border-radius: 6px; padding: 4px; background: #ffffff; display: block;" />
+          <div class="no-print" style="margin-top: 4px; display: flex; gap: 6px;">
+            <button type="button" onclick="regenerateSingleQuestionImage('${sectionKey}', ${idx})" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-semibold border border-slate-300 cursor-pointer">
+              Buat Ulang Gambar
+            </button>
+            <button type="button" onclick="removeSingleQuestionImage('${sectionKey}', ${idx})" class="px-2 py-0.5 rounded bg-rose-50 hover:bg-rose-100 text-rose-700 text-[10px] font-semibold border border-rose-200 cursor-pointer">
+              Hapus Gambar
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderKopAndIdentityHtml(meta, subTitleDoc = '') {
+      const leftLogoHtml = logoPemkabData
+        ? `<img src="${escapeHtml(logoPemkabData)}" alt="Logo Pemkab" style="width: 62px; height: 62px; object-fit: contain; margin: 0 auto;" />`
+        : '';
+      const rightLogoHtml = logoSekolahData
+        ? `<img src="${escapeHtml(logoSekolahData)}" alt="Logo Sekolah" style="width: 62px; height: 62px; object-fit: contain; margin: 0 auto;" />`
+        : '';
+
+      return `
+        <table class="kop-header-table">
+          <colgroup>
+            <col style="width: 14%;" />
+            <col style="width: 72%;" />
+            <col style="width: 14%;" />
+          </colgroup>
+          <tr>
+            <td style="text-align: center;">${leftLogoHtml}</td>
+            <td style="text-align: center; line-height: 1.28;">
+              <div style="font-size: 12pt; font-weight: bold; letter-spacing: 0.4px;">PEMERINTAH KABUPATEN SITUBONDO</div>
+              <div style="font-size: 15pt; font-weight: bold; letter-spacing: 0.6px;">SMP NEGERI 3 BESUKI</div>
+              <div style="font-size: 9.5pt;">Jalan Gunung Ringgit Besuki, Situbondo, Jawa Timur 68356</div>
+              <div style="font-size: 9pt; font-style: italic;">Laman www.smpn3besuki.sch.id E-Mail : admin@smpn3besuki.sch.id</div>
+            </td>
+            <td style="text-align: center;">${rightLogoHtml}</td>
+          </tr>
+        </table>
+
+        <div style="text-align: center; margin-bottom: 10px;">
+          <div contenteditable="true" onblur="editableJudulAsesmen = this.innerText.trim() || editableJudulAsesmen" title="Klik untuk mengubah judul asesmen" style="font-size: 12pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.3px;">
+            ${escapeHtml(subTitleDoc || editableJudulAsesmen)}
+          </div>
+          <div style="font-size: 10.5pt; font-weight: bold;">KURIKULUM MERDEKA — FASE D</div>
+        </div>
+
+        <table class="identitas-table">
+          <colgroup>
+            <col style="width: 18%;" />
+            <col style="width: 2%;" />
+            <col style="width: 32%;" />
+            <col style="width: 18%;" />
+            <col style="width: 2%;" />
+            <col style="width: 28%;" />
+          </colgroup>
+          <tr>
+            <td><strong>Mata Pelajaran</strong></td>
+            <td>:</td>
+            <td>${escapeHtml(meta.mapel)}</td>
+            <td><strong>Nama Siswa</strong></td>
+            <td>:</td>
+            <td>..........................................</td>
+          </tr>
+          <tr>
+            <td><strong>Kelas / Fase</strong></td>
+            <td>:</td>
+            <td>Kelas ${escapeHtml(meta.kelas)} SMP (Fase D)</td>
+            <td><strong>Nomor Peserta</strong></td>
+            <td>:</td>
+            <td>..........................................</td>
+          </tr>
+          <tr>
+            <td><strong>Materi Pokok</strong></td>
+            <td>:</td>
+            <td>${escapeHtml(meta.materi)}</td>
+            <td><strong>Alokasi Waktu</strong></td>
+            <td>:</td>
+            <td contenteditable="true" onblur="editableAlokasiWaktu = this.innerText.trim() || editableAlokasiWaktu">${escapeHtml(editableAlokasiWaktu)}</td>
+          </tr>
+        </table>
+      `;
+    }
+
+    function renderDocument() {
+      if (!currentGeneratedData || !currentMeta) return;
+      const d = currentGeneratedData;
+      const m = currentMeta;
+      const container = document.getElementById('document-container');
+
+      let html = '';
+
+      /* ======================================================================
+         BAGIAN 1: NASKAH SOAL UTAMA
+         ====================================================================== */
+      html += `<div id="doc-section-naskah">`;
+      html += renderKopAndIdentityHtml(m, editableJudulAsesmen);
+
+      html += `
+        <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 7px 10px; margin-bottom: 14px; font-size: 10pt;">
+          <strong>PETUNJUK UMUM:</strong>
+          <ol style="margin: 3px 0 0 18px; padding: 0;">
+            <li>Berdoalah sebelum mengerjakan soal dan tuliskan identitas Anda pada kolom yang tersedia.</li>
+            <li>Bacalah setiap stimulus bacaan, tabel, ayat, atau gambar dengan cermat sebelum menjawab.</li>
+            <li>Kerjakan soal-soal sesuai petunjuk pada masing-masing bagian bentuk soal.</li>
+          </ol>
+        </div>
+      `;
+
+      // A. Pilihan Ganda Sederhana
+      if (d.pg_sederhana.length > 0) {
+        html += `
+          <div style="font-size: 11pt; font-weight: bold; margin: 12px 0 6px 0; text-transform: uppercase;">
+            A. Pilihan Ganda Sederhana
+          </div>
+          <div style="font-size: 10pt; font-style: italic; margin-bottom: 8px;">
+            Pilihlah satu jawaban yang paling tepat (A, B, C, atau D)!
+          </div>
+        `;
+        d.pg_sederhana.forEach((q, idx) => {
+          const opsi = q.opsi || {};
+          html += `
+            <div class="soal-block">
+              <table class="soal-table">
+                <colgroup>
+                  <col style="width: 26px;" />
+                  <col style="width: auto;" />
+                </colgroup>
+                <tr>
+                  <td style="font-weight: bold;">${q.nomor}.</td>
+                  <td>
+                    ${q.stimulus ? `<div style="margin-bottom: 4px; text-align: justify;">${formatRichText(q.stimulus)}</div>` : ''}
+                    ${renderArabicBlockHtml(q.teks_arab, q.sumber_arab)}
+                    ${renderQuestionImageHtml('pg_sederhana', idx, q.image_data_url, q.deskripsi_gambar, q.image_loading)}
+                    <div style="text-align: justify;">${formatRichText(q.pertanyaan)}${getCognitiveBadgeHtml(q.level_kognitif)}</div>
+                    <table class="opsi-table">
+                      <colgroup>
+                        <col style="width: 22px;" />
+                        <col style="width: auto;" />
+                      </colgroup>
+                      ${['A', 'B', 'C', 'D'].map((huruf) => `
+                        <tr>
+                          <td>${huruf}.</td>
+                          <td>${formatRichText(opsi[huruf] || '')}</td>
+                        </tr>
+                      `).join('')}
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          `;
+        });
+      }
+
+      // B. Pilihan Ganda Kompleks
+      if (d.pg_kompleks.length > 0) {
+        html += `
+          <div style="font-size: 11pt; font-weight: bold; margin: 14px 0 6px 0; text-transform: uppercase;">
+            B. Pilihan Ganda Kompleks
+          </div>
+          <div style="font-size: 10pt; font-style: italic; margin-bottom: 8px;">
+            Berilah tanda centang (✓) atau lingkari lebih dari satu huruf jawaban (A, B, C, dst.) yang benar!
+          </div>
+        `;
+        d.pg_kompleks.forEach((q, idx) => {
+          const opsiList = normalizePgkOptions(q.opsi);
+          html += `
+            <div class="soal-block">
+              <table class="soal-table">
+                <colgroup>
+                  <col style="width: 26px;" />
+                  <col style="width: auto;" />
+                </colgroup>
+                <tr>
+                  <td style="font-weight: bold;">${q.nomor}.</td>
+                  <td>
+                    ${q.stimulus ? `<div style="margin-bottom: 4px; text-align: justify;">${formatRichText(q.stimulus)}</div>` : ''}
+                    ${renderArabicBlockHtml(q.teks_arab, q.sumber_arab)}
+                    ${renderQuestionImageHtml('pg_kompleks', idx, q.image_data_url, q.deskripsi_gambar, q.image_loading)}
+                    <div style="text-align: justify;">${formatRichText(q.pertanyaan)}${getCognitiveBadgeHtml(q.level_kognitif)}</div>
+                    <table class="opsi-table">
+                      <colgroup>
+                        <col style="width: 24px;" />
+                        <col style="width: 22px;" />
+                        <col style="width: auto;" />
+                      </colgroup>
+                      ${opsiList.map((op) => `
+                        <tr>
+                          <td style="text-align: left; white-space: nowrap;">&#9744;</td>
+                          <td style="font-weight: bold; white-space: nowrap;">${op.huruf}.</td>
+                          <td style="text-align: justify;">${formatRichText(op.teks)}</td>
+                        </tr>
+                      `).join('')}
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          `;
+        });
+      }
+
+      // C. Benar / Salah (Tabel AKM Sejajar Presisi)
+      if (d.benar_salah.length > 0) {
+        html += `
+          <div style="font-size: 11pt; font-weight: bold; margin: 14px 0 6px 0; text-transform: uppercase;">
+            C. Benar / Salah (Format AKM)
+          </div>
+          <div style="font-size: 10pt; font-style: italic; margin-bottom: 8px;">
+            Berilah tanda centang (✓) pada kolom <strong>Benar</strong> atau <strong>Salah</strong> untuk setiap pernyataan berikut!
+          </div>
+        `;
+        d.benar_salah.forEach((q, idx) => {
+          const stmtList = normalizeBsStatements(q.pernyataan);
+          html += `
+            <div class="soal-block">
+              <table class="soal-table">
+                <colgroup>
+                  <col style="width: 26px;" />
+                  <col style="width: auto;" />
+                </colgroup>
+                <tr>
+                  <td style="font-weight: bold;">${q.nomor}.</td>
+                  <td>
+                    ${q.stimulus ? `<div style="margin-bottom: 4px; text-align: justify;">${formatRichText(q.stimulus)}</div>` : ''}
+                    ${renderArabicBlockHtml(q.teks_arab, q.sumber_arab)}
+                    ${renderQuestionImageHtml('benar_salah', idx, q.image_data_url, q.deskripsi_gambar, q.image_loading)}
+                    <div style="text-align: justify;">${formatRichText(q.pertanyaan)}${getCognitiveBadgeHtml(q.level_kognitif)}</div>
+                    <table class="akm-grid-table">
+                      <colgroup>
+                        <col style="width: 74%;" />
+                        <col style="width: 13%;" />
+                        <col style="width: 13%;" />
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th style="text-align: left;">Pernyataan</th>
+                          <th>Benar</th>
+                          <th>Salah</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        ${stmtList.map((st) => `
+                          <tr>
+                            <td>
+                              <table class="pernyataan-inner-table">
+                                <colgroup>
+                                  <col style="width: 22px;" />
+                                  <col style="width: auto;" />
+                                </colgroup>
+                                <tr>
+                                  <td style="font-weight: bold;">${st.huruf}.</td>
+                                  <td style="text-align: justify;">${formatRichText(st.teks)}</td>
+                                </tr>
+                              </table>
+                            </td>
+                            <td style="text-align: center;">&#9744;</td>
+                            <td style="text-align: center;">&#9744;</td>
+                          </tr>
+                        `).join('')}
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          `;
+        });
+      }
+
+      // D. Menjodohkan (Format AKM)
+      if (d.menjodohkan.length > 0) {
+        html += `
+          <div style="font-size: 11pt; font-weight: bold; margin: 14px 0 6px 0; text-transform: uppercase;">
+            D. Menjodohkan (Format AKM)
+          </div>
+          <div style="font-size: 10pt; font-style: italic; margin-bottom: 8px;">
+            Pasangkan premis pada lajur kiri dengan pilihan respon yang tepat pada lajur kanan!
+          </div>
+        `;
+        d.menjodohkan.forEach((q, idx) => {
+          const premisList = Array.isArray(q.premis) ? q.premis : [];
+          const responList = Array.isArray(q.respon) ? q.respon : [];
+          const maxRows = Math.max(premisList.length, responList.length);
+          let rowsHtml = '';
+          for (let r = 0; r < maxRows; r++) {
+            const p = premisList[r];
+            const resItem = responList[r];
+            rowsHtml += `
+              <tr>
+                <td>
+                  ${p ? `<strong>${escapeHtml(p.id || String(r + 1))}.</strong> ${formatRichText(p.teks || '')}` : ''}
+                </td>
+                <td style="text-align: center;">${p ? '( ..... )' : ''}</td>
+                <td>
+                  ${resItem ? `<strong>${escapeHtml(resItem.id || getAlphabetLabel(r))}.</strong> ${formatRichText(resItem.teks || '')}` : ''}
+                </td>
+              </tr>
+            `;
+          }
+
+          html += `
+            <div class="soal-block">
+              <table class="soal-table">
+                <colgroup>
+                  <col style="width: 26px;" />
+                  <col style="width: auto;" />
+                </colgroup>
+                <tr>
+                  <td style="font-weight: bold;">${q.nomor}.</td>
+                  <td>
+                    ${q.stimulus ? `<div style="margin-bottom: 4px; text-align: justify;">${formatRichText(q.stimulus)}</div>` : ''}
+                    ${renderQuestionImageHtml('menjodohkan', idx, q.image_data_url, q.deskripsi_gambar, q.image_loading)}
+                    <div style="text-align: justify;">${formatRichText(q.pertanyaan)}${getCognitiveBadgeHtml(q.level_kognitif)}</div>
+                    <table class="akm-grid-table">
+                      <colgroup>
+                        <col style="width: 44%;" />
+                        <col style="width: 12%;" />
+                        <col style="width: 44%;" />
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>Premis / Pernyataan</th>
+                          <th>Pasangan</th>
+                          <th>Pilihan Respon</th>
+                        </tr>
+                      </thead>
+                      <tbody>${rowsHtml}</tbody>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          `;
+        });
+      }
+
+      // E. Esai / Uraian HOTS
+      if (d.esai.length > 0) {
+        html += `
+          <div style="font-size: 11pt; font-weight: bold; margin: 14px 0 6px 0; text-transform: uppercase;">
+            E. Uraian / Esai Analitis (HOTS)
+          </div>
+          <div style="font-size: 10pt; font-style: italic; margin-bottom: 8px;">
+            Jawablah pertanyaan-pertanyaan berikut dengan uraian yang jelas, sistematis, dan logis!
+          </div>
+        `;
+        d.esai.forEach((q, idx) => {
+          html += `
+            <div class="soal-block">
+              <table class="soal-table">
+                <colgroup>
+                  <col style="width: 26px;" />
+                  <col style="width: auto;" />
+                </colgroup>
+                <tr>
+                  <td style="font-weight: bold;">${q.nomor}.</td>
+                  <td>
+                    ${q.stimulus ? `<div style="margin-bottom: 4px; text-align: justify;">${formatRichText(q.stimulus)}</div>` : ''}
+                    ${renderArabicBlockHtml(q.teks_arab, q.sumber_arab)}
+                    ${renderQuestionImageHtml('esai', idx, q.image_data_url, q.deskripsi_gambar, q.image_loading)}
+                    <div style="text-align: justify;">${formatRichText(q.pertanyaan)}${getCognitiveBadgeHtml(q.level_kognitif)}</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          `;
+        });
+      }
+      html += `</div>`;
+
+      /* ======================================================================
+         BAGIAN 2: KUNCI JAWABAN, PEMBAHASAN & RUBRIK PENSKORAN
+         ====================================================================== */
+      html += `<div id="doc-section-kunci" class="page-break-before" style="margin-top: 28px; padding-top: 18px; border-top: 2px dashed #94a3b8;">`;
+      html += renderKopAndIdentityHtml(m, 'KUNCI JAWABAN, PEMBAHASAN, & RUBRIK PENSKORAN');
+
+      if (d.pg_sederhana.length > 0) {
+        html += `<div style="font-weight: bold; margin: 10px 0 5px 0;">A. Kunci Pilihan Ganda Sederhana (Skor @ 1)</div>`;
+        html += `<table class="akm-grid-table"><thead><tr><th style="width: 55px;">No.</th><th style="width: 70px;">Kunci</th><th style="text-align: left;">Pembahasan</th></tr></thead><tbody>`;
+        d.pg_sederhana.forEach((q) => {
+          html += `<tr><td style="text-align: center; font-weight: bold;">${q.nomor}</td><td style="text-align: center; font-weight: bold;">${escapeHtml(q.kunci)}</td><td>${formatRichText(q.pembahasan || '')}</td></tr>`;
+        });
+        html += `</tbody></table>`;
+      }
+
+      if (d.pg_kompleks.length > 0) {
+        html += `<div style="font-weight: bold; margin: 12px 0 5px 0;">B. Kunci Pilihan Ganda Kompleks (Skor @ 2)</div>`;
+        html += `<table class="akm-grid-table"><thead><tr><th style="width: 55px;">No.</th><th style="width: 110px;">Kunci Benar</th><th style="text-align: left;">Pembahasan</th></tr></thead><tbody>`;
+        d.pg_kompleks.forEach((q) => {
+          const kunciArr = Array.isArray(q.kunci) ? q.kunci : [q.kunci];
+          html += `<tr><td style="text-align: center; font-weight: bold;">${q.nomor}</td><td style="text-align: center; font-weight: bold;">${escapeHtml(kunciArr.join(', '))}</td><td>${formatRichText(q.pembahasan || '')}</td></tr>`;
+        });
+        html += `</tbody></table>`;
+      }
+
+      if (d.benar_salah.length > 0) {
+        html += `<div style="font-weight: bold; margin: 12px 0 5px 0;">C. Kunci Benar / Salah (Skor @ 2)</div>`;
+        html += `<table class="akm-grid-table"><thead><tr><th style="width: 55px;">No.</th><th style="width: 210px;">Kunci Pernyataan</th><th style="text-align: left;">Pembahasan</th></tr></thead><tbody>`;
+        d.benar_salah.forEach((q) => {
+          const stmts = normalizeBsStatements(q.pernyataan);
+          const kunciStr = stmts.map((s) => `${s.huruf}: ${s.jawaban}`).join(' | ');
+          html += `<tr><td style="text-align: center; font-weight: bold;">${q.nomor}</td><td style="font-weight: bold;">${escapeHtml(kunciStr)}</td><td>${formatRichText(q.pembahasan || '')}</td></tr>`;
+        });
+        html += `</tbody></table>`;
+      }
+
+      if (d.menjodohkan.length > 0) {
+        html += `<div style="font-weight: bold; margin: 12px 0 5px 0;">D. Kunci Menjodohkan (Skor @ 3)</div>`;
+        html += `<table class="akm-grid-table"><thead><tr><th style="width: 55px;">No.</th><th style="width: 180px;">Pasangan Tepat</th><th style="text-align: left;">Pembahasan</th></tr></thead><tbody>`;
+        d.menjodohkan.forEach((q) => {
+          const kp = q.kunci_pasangan || {};
+          const pairText = Object.entries(kp).map(([k, v]) => `${k} → ${v}`).join(', ');
+          html += `<tr><td style="text-align: center; font-weight: bold;">${q.nomor}</td><td style="font-weight: bold;">${escapeHtml(pairText)}</td><td>${formatRichText(q.pembahasan || '')}</td></tr>`;
+        });
+        html += `</tbody></table>`;
+      }
+
+      if (d.esai.length > 0) {
+        html += `<div style="font-weight: bold; margin: 12px 0 5px 0;">E. Pedoman Penskoran &amp; Kunci Uraian / Esai</div>`;
+        html += `<table class="akm-grid-table"><thead><tr><th style="width: 55px;">No.</th><th style="text-align: left;">Kunci Jawaban Ideal &amp; Rubrik Skor</th><th style="width: 75px;">Skor Maks</th></tr></thead><tbody>`;
+        d.esai.forEach((q) => {
+          const rubrik = Array.isArray(q.rubrik_skor) ? q.rubrik_skor : [];
+          const rubrikHtml = rubrik.length > 0
+            ? `<ul style="margin: 4px 0 0 16px; padding: 0; font-size: 9.5pt;">${rubrik.map((r) => `<li>Skor ${r.skor}: ${escapeHtml(r.kriteria)}</li>`).join('')}</ul>`
+            : '';
+          html += `
+            <tr>
+              <td style="text-align: center; font-weight: bold;">${q.nomor}</td>
+              <td>
+                <div><strong>Kunci Jawaban:</strong> ${formatRichText(q.kunci_jawaban || '')}</div>
+                ${rubrikHtml}
+              </td>
+              <td style="text-align: center; font-weight: bold;">${q.skor_maksimal || 4}</td>
+            </tr>
+          `;
+        });
+        html += `</tbody></table>`;
+      }
+      html += `</div>`;
+
+      /* ======================================================================
+         BAGIAN 3: KISI-KISI & KARTU SOAL
+         ====================================================================== */
+      const allItems = [
+        ...d.pg_sederhana.map((q) => ({ ...q, bentuk: 'PG Sederhana', kunciRingkas: q.kunci })),
+        ...d.pg_kompleks.map((q) => ({ ...q, bentuk: 'PG Kompleks', kunciRingkas: (Array.isArray(q.kunci) ? q.kunci : [q.kunci]).join(', ') })),
+        ...d.benar_salah.map((q) => ({ ...q, bentuk: 'Benar/Salah', kunciRingkas: normalizeBsStatements(q.pernyataan).map((s) => `${s.huruf}:${s.jawaban[0]}`).join(', ') })),
+        ...d.menjodohkan.map((q) => ({ ...q, bentuk: 'Menjodohkan', kunciRingkas: Object.entries(q.kunci_pasangan || {}).map(([k, v]) => `${k}-${v}`).join(', ') })),
+        ...d.esai.map((q) => ({ ...q, bentuk: 'Uraian/Esai', kunciRingkas: q.kunci_jawaban || 'Terlampir pada pedoman penskoran' }))
+      ];
+
+      html += `<div id="doc-section-kisikisi" class="page-break-before" style="margin-top: 28px; padding-top: 18px; border-top: 2px dashed #94a3b8;">`;
+      html += renderKopAndIdentityHtml(m, 'KISI-KISI PENULISAN SOAL & KARTU SOAL');
+
+      html += `<div style="font-weight: bold; margin: 8px 0 6px 0; font-size: 11pt;">I. TABEL KISI-KISI PENULISAN SOAL</div>`;
+      html += `
+        <table class="akm-grid-table">
+          <thead>
+            <tr>
+              <th style="width: 45px;">No.</th>
+              <th style="width: 18%;">Materi Pokok</th>
+              <th style="text-align: left;">Indikator Soal</th>
+              <th style="width: 14%;">Level Kognitif</th>
+              <th style="width: 15%;">Bentuk Soal</th>
+              <th style="width: 60px;">No. Soal</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${allItems.map((it, i) => `
+              <tr>
+                <td style="text-align: center;">${i + 1}</td>
+                <td>${escapeHtml(m.materi)}</td>
+                <td>${formatRichText(it.indikator_soal || `Disajikan konteks materi ${m.materi}, peserta didik dapat menyelesaikan permasalahan dengan tepat.`)}</td>
+                <td style="text-align: center;">${escapeHtml(it.level_kognitif || 'L2 (C3)')}</td>
+                <td style="text-align: center;">${escapeHtml(it.bentuk)}</td>
+                <td style="text-align: center; font-weight: bold;">${it.nomor}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+
+      html += `<div style="font-weight: bold; margin: 18px 0 6px 0; font-size: 11pt;">II. KARTU SOAL PER BUTIR</div>`;
+      allItems.forEach((it) => {
+        html += `
+          <table class="akm-grid-table soal-block" style="margin-bottom: 10px;">
+            <colgroup>
+              <col style="width: 24%;" />
+              <col style="width: 26%;" />
+              <col style="width: 24%;" />
+              <col style="width: 26%;" />
+            </colgroup>
+            <tr>
+              <th colspan="4" style="text-align: left; background-color: #e2e8f0;">KARTU SOAL NOMOR ${it.nomor} — ${escapeHtml(it.bentuk.toUpperCase())}</th>
+            </tr>
+            <tr>
+              <td><strong>Mata Pelajaran</strong></td>
+              <td>${escapeHtml(m.mapel)}</td>
+              <td><strong>Kelas / Fase</strong></td>
+              <td>Kelas ${escapeHtml(m.kelas)} SMP (Fase D)</td>
+            </tr>
+            <tr>
+              <td><strong>Materi Pokok</strong></td>
+              <td>${escapeHtml(m.materi)}</td>
+              <td><strong>Level Kognitif</strong></td>
+              <td>${escapeHtml(it.level_kognitif || 'L2 (C3)')}</td>
+            </tr>
+            <tr>
+              <td><strong>Indikator Soal</strong></td>
+              <td colspan="3">${formatRichText(it.indikator_soal || '-')}</td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <strong>Rumusan Butir Soal:</strong><br />
+                ${it.stimulus ? `<div style="margin-top: 3px;">${formatRichText(it.stimulus)}</div>` : ''}
+                <div style="margin-top: 3px;">${formatRichText(it.pertanyaan)}</div>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Kunci Jawaban</strong></td>
+              <td colspan="3"><strong>${formatRichText(it.kunciRingkas)}</strong></td>
+            </tr>
+          </table>
+        `;
+      });
+      html += `</div>`;
+
+      /* ======================================================================
+         BAGIAN 4: ANALISIS KOGNITIF & TELAAH INSTRUMEN
+         ====================================================================== */
+      let countL1 = 0;
+      let countL2 = 0;
+      let countL3 = 0;
+      allItems.forEach((it) => {
+        const lv = String(it.level_kognitif || '');
+        if (/L1|C1|C2/i.test(lv)) countL1++;
+        else if (/L3|C4|C5|C6/i.test(lv)) countL3++;
+        else countL2++;
+      });
+      const totalAll = Math.max(1, allItems.length);
+      const pctL1 = Math.round((countL1 / totalAll) * 100);
+      const pctL2 = Math.round((countL2 / totalAll) * 100);
+      const pctL3 = Math.round((countL3 / totalAll) * 100);
+      const totalSkorMaks =
+        d.pg_sederhana.length * 1 +
+        d.pg_kompleks.length * 2 +
+        d.benar_salah.length * 2 +
+        d.menjodohkan.length * 3 +
+        d.esai.reduce((acc, q) => acc + (parseInt(q.skor_maksimal, 10) || 4), 0);
+
+      html += `
+        <div id="doc-section-analisis" class="no-print" style="margin-top: 28px; padding-top: 18px; border-top: 2px dashed #94a3b8; font-family: 'Inter', sans-serif;">
+          <h3 class="text-base font-bold text-slate-900 mb-3">Analisis Proporsi Kognitif &amp; Kualitas Instrumen</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[11px] text-slate-500">Total Butir Soal</div>
+              <div class="text-lg font-extrabold text-slate-900">${allItems.length} Butir</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[11px] text-slate-500">Total Skor Maksimal</div>
+              <div class="text-lg font-extrabold text-blue-950">${totalSkorMaks} Poin</div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200">
+              <div class="text-[11px] text-amber-800">Porsi HOTS (L3 / C4–C6)</div>
+              <div class="text-lg font-extrabold text-amber-900">${countL3} Soal (${pctL3}%)</div>
+            </div>
+            <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200">
+              <div class="text-[11px] text-emerald-800">Variasi Bentuk AKM</div>
+              <div class="text-lg font-extrabold text-emerald-900">${[d.pg_sederhana.length, d.pg_kompleks.length, d.benar_salah.length, d.menjodohkan.length, d.esai.length].filter((n) => n > 0).length} Bentuk</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3 text-xs">
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Level 1 (L1 / C1–C2: Pengetahuan &amp; Pemahaman)</span>
+                <span>${countL1} soal (${pctL1}%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden">
+                <div class="h-full bg-sky-600" style="width: ${pctL1}%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Level 2 (L2 / C3: Aplikasi &amp; Penerapan Konsep)</span>
+                <span>${countL2} soal (${pctL2}%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden">
+                <div class="h-full bg-indigo-600" style="width: ${pctL2}%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-semibold text-slate-700 mb-1">
+                <span>Level 3 (L3 / C4–C6: Penalaran, Analisis &amp; Evaluasi HOTS)</span>
+                <span>${countL3} soal (${pctL3}%)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden">
+                <div class="h-full bg-amber-500" style="width: ${pctL3}%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    /* ==========================================================================
+       7. NAVIGASI TAB & MODE KUIS INTERAKTIF
+       ========================================================================== */
+    function switchTab(tabName) {
+      currentTab = tabName;
+      const tabIds = ['semua', 'naskah', 'kunci', 'kisikisi', 'analisis', 'kuis'];
+      tabIds.forEach((id) => {
+        const btn = document.getElementById(`tab-${id}`);
+        if (!btn) return;
+        if (id === tabName) {
+          btn.className = 'px-3 py-1.5 rounded-xl text-xs font-bold bg-blue-950 text-white transition cursor-pointer';
+        } else if (id === 'kuis') {
+          btn.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition cursor-pointer';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition cursor-pointer';
+        }
+      });
+
+      const docContainer = document.getElementById('document-container');
+      const quizContainer = document.getElementById('quiz-container');
+
+      if (tabName === 'kuis') {
+        docContainer.classList.add('hidden');
+        quizContainer.classList.remove('hidden');
+        renderInteractiveQuiz();
+        return;
+      }
+
+      quizContainer.classList.add('hidden');
+      docContainer.classList.remove('hidden');
+
+      const secNaskah = document.getElementById('doc-section-naskah');
+      const secKunci = document.getElementById('doc-section-kunci');
+      const secKisi = document.getElementById('doc-section-kisikisi');
+      const secAnalisis = document.getElementById('doc-section-analisis');
+
+      if (secNaskah) secNaskah.classList.toggle('hidden', tabName !== 'semua' && tabName !== 'naskah');
+      if (secKunci) secKunci.classList.toggle('hidden', tabName !== 'semua' && tabName !== 'kunci');
+      if (secKisi) secKisi.classList.toggle('hidden', tabName !== 'semua' && tabName !== 'kisikisi');
+      if (secAnalisis) secAnalisis.classList.toggle('hidden', tabName !== 'semua' && tabName !== 'analisis');
+    }
+
+    function renderInteractiveQuiz() {
+      if (!currentGeneratedData || !currentMeta) return;
+      const d = currentGeneratedData;
+      const quizContainer = document.getElementById('quiz-container');
+
+      let html = `
+        <div class="border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-900">SIMULASI CBT / KUIS INTERAKTIF</span>
+            <h3 class="text-base font-bold text-slate-900 mt-1">${escapeHtml(currentMeta.mapel)} — Kelas ${escapeHtml(currentMeta.kelas)} SMP</h3>
+            <p class="text-xs text-slate-500">Topik: ${escapeHtml(currentMeta.materi)}</p>
+          </div>
+          <div id="quiz-score-banner" class="hidden px-4 py-2 rounded-xl bg-blue-950 text-white text-xs font-bold"></div>
+        </div>
+        <div class="space-y-5">
+      `;
+
+      // PG Sederhana
+      d.pg_sederhana.forEach((q) => {
+        const opsi = q.opsi || {};
+        html += `
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2.5" id="quiz-card-${q.nomor}">
+            <div class="text-xs font-bold text-blue-950">Soal No. ${q.nomor} • Pilihan Ganda</div>
+            ${q.stimulus ? `<p class="text-sm text-slate-700 leading-relaxed">${formatRichText(q.stimulus)}</p>` : ''}
+            ${renderArabicBlockHtml(q.teks_arab, q.sumber_arab)}
+            ${q.image_data_url ? `<img src="${escapeHtml(q.image_data_url)}" class="max-w-xs rounded-lg border border-slate-300 bg-white p-1" />` : ''}
+            <p class="text-sm font-semibold text-slate-900">${formatRichText(q.pertanyaan)}</p>
+            <div class="space-y-1.5">
+              ${['A', 'B', 'C', 'D'].map((h) => `
+                <label class="flex items-start gap-2.5 p-2.5 rounded-lg border border-slate-200 bg-white hover:bg-blue-50/40 cursor-pointer text-sm">
+                  <input type="radio" name="quiz-pg-${q.nomor}" value="${h}" class="mt-1" />
+                  <span><strong>${h}.</strong> ${formatRichText(opsi[h] || '')}</span>
+                </label>
+              `).join('')}
+            </div>
+            <div id="quiz-feedback-${q.nomor}" class="hidden text-xs p-2.5 rounded-lg"></div>
+          </div>
+        `;
+      });
+
+      // PG Kompleks
+      d.pg_kompleks.forEach((q) => {
+        const opsiList = normalizePgkOptions(q.opsi);
+        html += `
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2.5" id="quiz-card-${q.nomor}">
+            <div class="text-xs font-bold text-indigo-900">Soal No. ${q.nomor} • Pilihan Ganda Kompleks (Pilih &gt;1)</div>
+            ${q.stimulus ? `<p class="text-sm text-slate-700 leading-relaxed">${formatRichText(q.stimulus)}</p>` : ''}
+            ${renderArabicBlockHtml(q.teks_arab, q.sumber_arab)}
+            ${q.image_data_url ? `<img src="${escapeHtml(q.image_data_url)}" class="max-w-xs rounded-lg border border-slate-300 bg-white p-1" />` : ''}
+            <p class="text-sm font-semibold text-slate-900">${formatRichText(q.pertanyaan)}</p>
+            <div class="space-y-1.5">
+              ${opsiList.map((op) => `
+                <label class="flex items-start gap-2.5 p-2.5 rounded-lg border border-slate-200 bg-white hover:bg-indigo-50/40 cursor-pointer text-sm">
+                  <input type="checkbox" name="quiz-pgk-${q.nomor}" value="${op.huruf}" class="mt-1 shrink-0" />
+                  <span class="font-bold shrink-0 w-5">${op.huruf}.</span>
+                  <span class="flex-1">${formatRichText(op.teks)}</span>
+                </label>
+              `).join('')}
+            </div>
+            <div id="quiz-feedback-${q.nomor}" class="hidden text-xs p-2.5 rounded-lg"></div>
+          </div>
+        `;
+      });
+
+      // Benar / Salah
+      d.benar_salah.forEach((q) => {
+        const stmts = normalizeBsStatements(q.pernyataan);
+        html += `
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2.5" id="quiz-card-${q.nomor}">
+            <div class="text-xs font-bold text-emerald-900">Soal No. ${q.nomor} • Benar / Salah</div>
+            ${q.stimulus ? `<p class="text-sm text-slate-700 leading-relaxed">${formatRichText(q.stimulus)}</p>` : ''}
+            ${q.image_data_url ? `<img src="${escapeHtml(q.image_data_url)}" class="max-w-xs rounded-lg border border-slate-300 bg-white p-1" />` : ''}
+            <p class="text-sm font-semibold text-slate-900">${formatRichText(q.pertanyaan)}</p>
+            <div class="space-y-1.5">
+              ${opsiList.map((op) => `
+                <label class="flex items-start gap-2.5 p-2.5 rounded-lg border border-slate-200 bg-white hover:bg-indigo-50/40 cursor-pointer text-sm">
+                  <input type="checkbox" name="quiz-pgk-${q.nomor}" value="${op.huruf}" class="mt-1" />
+                  <span><strong>${op.huruf}.</strong> ${formatRichText(op.teks)}</span>
+                </label>
+              `).join('')}
+            </div>
+            <div id="quiz-feedback-${q.nomor}" class="hidden text-xs p-2.5 rounded-lg"></div>
+          </div>
+        `;
+      });
+
+      // Benar / Salah
+      d.benar_salah.forEach((q) => {
+        const stmts = normalizeBsStatements(q.pernyataan);
+        html += `
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2.5" id="quiz-card-${q.nomor}">
+            <div class="text-xs font-bold text-emerald-900">Soal No. ${q.nomor} • Benar / Salah</div>
+            ${q.stimulus ? `<p class="text-sm text-slate-700 leading-relaxed">${formatRichText(q.stimulus)}</p>` : ''}
+            ${renderArabicBlockHtml(q.teks_arab, q.sumber_arab)}
+            ${q.image_data_url ? `<img src="${escapeHtml(q.image_data_url)}" class="max-w-xs rounded-lg border border-slate-300 bg-white p-1" />` : ''}
+            <p class="text-sm font-semibold text-slate-900">${formatRichText(q.pertanyaan)}</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs border border-slate-300 bg-white">
+                <thead class="bg-slate-100">
+                  <tr>
+                    <th class="p-2 text-left border border-slate-300">Pernyataan</th>
+                    <th class="p-2 text-center border border-slate-300 w-20">Benar</th>
+                    <th class="p-2 text-center border border-slate-300 w-20">Salah</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${stmts.map((st, sIdx) => `
+                    <tr>
+                      <td class="p-2 border border-slate-300"><strong>${st.huruf}.</strong> ${formatRichText(st.teks)}</td>
+                      <td class="p-2 border border-slate-300 text-center"><input type="radio" name="quiz-bs-${q.nomor}-${sIdx}" value="Benar" /></td>
+                      <td class="p-2 border border-slate-300 text-center"><input type="radio" name="quiz-bs-${q.nomor}-${sIdx}" value="Salah" /></td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+            <div id="quiz-feedback-${q.nomor}" class="hidden text-xs p-2.5 rounded-lg"></div>
+          </div>
+        `;
+      });
+
+      // Menjodohkan
+      d.menjodohkan.forEach((q) => {
+        const premisList = Array.isArray(q.premis) ? q.premis : [];
+        const responList = Array.isArray(q.respon) ? q.respon : [];
+        html += `
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2.5" id="quiz-card-${q.nomor}">
+            <div class="text-xs font-bold text-purple-900">Soal No. ${q.nomor} • Menjodohkan</div>
+            ${q.stimulus ? `<p class="text-sm text-slate-700 leading-relaxed">${formatRichText(q.stimulus)}</p>` : ''}
+            ${q.image_data_url ? `<img src="${escapeHtml(q.image_data_url)}" class="max-w-xs rounded-lg border border-slate-300 bg-white p-1" />` : ''}
+            <p class="text-sm font-semibold text-slate-900">${formatRichText(q.pertanyaan)}</p>
+            <div class="space-y-2">
+              ${premisList.map((p, pIdx) => `
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 rounded-lg bg-white border border-slate-200 text-xs">
+                  <span><strong>${escapeHtml(p.id || String(pIdx + 1))}.</strong> ${formatRichText(p.teks || '')}</span>
+                  <select id="quiz-mj-${q.nomor}-${escapeHtml(p.id || String(pIdx + 1))}" class="rounded-lg border border-slate-300 px-2.5 py-1.5 font-semibold text-slate-800">
+                    <option value="">-- Pilih Pasangan --</option>
+                    ${responList.map((r, rIdx) => {
+                      const rid = r.id || getAlphabetLabel(rIdx);
+                      return `<option value="${escapeHtml(rid)}">${escapeHtml(rid)}. ${escapeHtml(String(r.teks || '').replace(/<[^>]*>/g, ''))}</option>`;
+                    }).join('')}
+                  </select>
+                </div>
+              `).join('')}
+            </div>
+            <div id="quiz-feedback-${q.nomor}" class="hidden text-xs p-2.5 rounded-lg"></div>
+          </div>
+        `;
+      });
+
+      // Esai
+      d.esai.forEach((q) => {
+        html += `
+          <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-2.5" id="quiz-card-${q.nomor}">
+            <div class="text-xs font-bold text-amber-900">Soal No. ${q.nomor} • Uraian / Esai (Penilaian Mandiri)</div>
+            ${q.stimulus ? `<p class="text-sm text-slate-700 leading-relaxed">${formatRichText(q.stimulus)}</p>` : ''}
+            ${q.image_data_url ? `<img src="${escapeHtml(q.image_data_url)}" class="max-w-xs rounded-lg border border-slate-300 bg-white p-1" />` : ''}
+            <p class="text-sm font-semibold text-slate-900">${formatRichText(q.pertanyaan)}</p>
+            <textarea rows="3" placeholder="Ketik jawaban uraian Anda di sini..." class="w-full rounded-xl border border-slate-300 p-3 text-sm bg-white outline-none focus:border-blue-900"></textarea>
+            <div id="quiz-feedback-${q.nomor}" class="hidden text-xs p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-950">
+              <strong>Kunci Jawaban Ideal:</strong> ${formatRichText(q.kunci_jawaban || '')}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `
+        </div>
+        <div class="pt-4 border-t border-slate-200 flex flex-wrap gap-2">
+          <button type="button" onclick="gradeInteractiveQuiz()" class="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow transition cursor-pointer">
+            Periksa Jawaban &amp; Lihat Skor
+          </button>
+          <button type="button" onclick="renderInteractiveQuiz()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer">
+            Ulangi Kuis
+          </button>
+        </div>
+      `;
+
+      quizContainer.innerHTML = html;
+    }
+
+    function gradeInteractiveQuiz() {
+      if (!currentGeneratedData) return;
+      const d = currentGeneratedData;
+      let earned = 0;
+      let maxObjective = 0;
+
+      d.pg_sederhana.forEach((q) => {
+        maxObjective += 1;
+        const checked = document.querySelector(`input[name="quiz-pg-${q.nomor}"]:checked`);
+        const ans = checked ? checked.value : '';
+        const isCorrect = ans === String(q.kunci).trim().toUpperCase();
+        if (isCorrect) earned += 1;
+        const fb = document.getElementById(`quiz-feedback-${q.nomor}`);
+        if (fb) {
+          fb.classList.remove('hidden');
+          fb.className = `text-xs p-2.5 rounded-lg border ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-rose-50 border-rose-200 text-rose-900'}`;
+          fb.innerHTML = `${isCorrect ? '<strong>Benar!</strong>' : `<strong>Kurang Tepat.</strong> Kunci: <strong>${escapeHtml(q.kunci)}</strong>.`} ${formatRichText(q.pembahasan || '')}`;
+        }
+      });
+
+      d.pg_kompleks.forEach((q) => {
+        maxObjective += 2;
+        const checkedBoxes = Array.from(document.querySelectorAll(`input[name="quiz-pgk-${q.nomor}"]:checked`)).map((el) => el.value).sort();
+        const expected = (Array.isArray(q.kunci) ? q.kunci : [q.kunci]).map((k) => String(k).trim().toUpperCase()).sort();
+        const isCorrect = checkedBoxes.length === expected.length && checkedBoxes.every((v, i) => v === expected[i]);
+        if (isCorrect) earned += 2;
+        const fb = document.getElementById(`quiz-feedback-${q.nomor}`);
+        if (fb) {
+          fb.classList.remove('hidden');
+          fb.className = `text-xs p-2.5 rounded-lg border ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-rose-50 border-rose-200 text-rose-900'}`;
+          fb.innerHTML = `${isCorrect ? '<strong>Benar!</strong>' : `<strong>Kurang Tepat.</strong> Kunci: <strong>${escapeHtml(expected.join(', '))}</strong>.`} ${formatRichText(q.pembahasan || '')}`;
+        }
+      });
+
+      d.benar_salah.forEach((q) => {
+        maxObjective += 2;
+        const stmts = normalizeBsStatements(q.pernyataan);
+        const allMatch = stmts.every((st, sIdx) => {
+          const sel = document.querySelector(`input[name="quiz-bs-${q.nomor}-${sIdx}"]:checked`);
+          return sel && sel.value === st.jawaban;
+        });
+        if (allMatch) earned += 2;
+        const fb = document.getElementById(`quiz-feedback-${q.nomor}`);
+        if (fb) {
+          fb.classList.remove('hidden');
+          fb.className = `text-xs p-2.5 rounded-lg border ${allMatch ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-rose-50 border-rose-200 text-rose-900'}`;
+          fb.innerHTML = `${allMatch ? '<strong>Semua Pernyataan Benar!</strong>' : `<strong>Belum Tepat Semua.</strong> Kunci: <strong>${escapeHtml(stmts.map((s) => `${s.huruf}:${s.jawaban}`).join(', '))}</strong>.`}`;
+        }
+      });
+
+      d.menjodohkan.forEach((q) => {
+        maxObjective += 3;
+        const premisList = Array.isArray(q.premis) ? q.premis : [];
+        const kp = q.kunci_pasangan || {};
+        const allMatch = premisList.every((p, pIdx) => {
+          const pid = p.id || String(pIdx + 1);
+          const sel = document.getElementById(`quiz-mj-${q.nomor}-${pid}`);
+          return sel && sel.value === String(kp[pid] || '');
+        });
+        if (allMatch) earned += 3;
+        const fb = document.getElementById(`quiz-feedback-${q.nomor}`);
+        if (fb) {
+          fb.classList.remove('hidden');
+          fb.className = `text-xs p-2.5 rounded-lg border ${allMatch ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-rose-50 border-rose-200 text-rose-900'}`;
+          fb.innerHTML = `${allMatch ? '<strong>Pasangan Tepat Semua!</strong>' : `<strong>Belum Tepat.</strong> Kunci: <strong>${escapeHtml(Object.entries(kp).map(([k, v]) => `${k}→${v}`).join(', '))}</strong>.`}`;
+        }
+      });
+
+      d.esai.forEach((q) => {
+        const fb = document.getElementById(`quiz-feedback-${q.nomor}`);
+        if (fb) fb.classList.remove('hidden');
+      });
+
+      const pct = maxObjective > 0 ? Math.round((earned / maxObjective) * 100) : 100;
+      const banner = document.getElementById('quiz-score-banner');
+      if (banner) {
+        banner.classList.remove('hidden');
+        banner.textContent = `Nilai Objektif: ${pct} / 100 (Skor ${earned}/${maxObjective})`;
+      }
+      showToast(`Pemeriksaan selesai! Nilai objektif Anda: ${pct}/100.`, 'success');
+    }
+
+    /* ==========================================================================
+       8. CETAK PDF, SALIN TEKS, & EKSPOR WORD (.DOC MHTML DENGAN GAMBAR TERSEMAT)
+       ========================================================================== */
+    function printExam() {
+      if (currentTab === 'kuis') {
+        switchTab('semua');
+      }
+      window.print();
+    }
+
+    function copyPlainText() {
+      const docEl = document.getElementById('document-container');
+      if (!docEl || docEl.classList.contains('hidden')) return;
+      const ta = document.createElement('textarea');
+      ta.value = docEl.innerText;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast('Seluruh teks naskah soal dan kunci berhasil disalin.', 'success');
+      } catch (e) {
+        showToast('Gagal menyalin teks.', 'error');
+      }
+      document.body.removeChild(ta);
+    }
+
+    async function convertImageToPngData(src) {
+      return await new Promise((resolve) => {
+        if (!src) {
+          resolve(null);
+          return;
+        }
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          try {
+            const natW = img.naturalWidth || 120;
+            const natH = img.naturalHeight || 120;
+            const maxDim = 420;
+            const scale = Math.min(1, maxDim / Math.max(natW, natH));
+            const w = Math.max(24, Math.round(natW * scale));
+            const h = Math.max(24, Math.round(natH * scale));
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            const pngDataUrl = canvas.toDataURL('image/png');
+            const base64 = pngDataUrl.split(',')[1] || '';
+            resolve({ base64, width: w, height: h });
+          } catch (e) {
+            if (src.startsWith('data:image/')) {
+              const base64 = src.split(',')[1] || '';
+              resolve({ base64, width: 140, height: 140 });
+            } else {
+              resolve(null);
+            }
+          }
+        };
+        img.onerror = () => {
+          if (src.startsWith('data:image/')) {
+            const base64 = src.split(',')[1] || '';
+            resolve({ base64, width: 140, height: 140 });
+          } else {
+            resolve(null);
+          }
+        };
+        img.src = src;
+      });
+    }
+
+    async function buildMhtmlWordDocument(docTitle, rawSectionHtml) {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = rawSectionHtml;
+
+      // Hapus elemen khusus tampilan web
+      wrapper.querySelectorAll('.no-print').forEach((el) => el.remove());
+
+      const imgNodes = Array.from(wrapper.querySelectorAll('img'));
+      const mhtmlParts = [];
+
+      for (let i = 0; i < imgNodes.length; i++) {
+        const imgEl = imgNodes[i];
+        const src = imgEl.getAttribute('src') || '';
+        const converted = await convertImageToPngData(src);
+        if (converted && converted.base64) {
+          const cidName = `img_smp3_${i + 1}.png`;
+          const isLogo = /logo/i.test(imgEl.getAttribute('alt') || '');
+          const targetW = isLogo ? 62 : Math.min(260, converted.width);
+          const targetH = isLogo ? 62 : Math.round((targetW / converted.width) * converted.height);
+          imgEl.setAttribute('src', `file:///C:/word_assets/${cidName}`);
+          imgEl.setAttribute('width', String(targetW));
+          imgEl.setAttribute('height', String(targetH));
+          mhtmlParts.push({
+            location: `file:///C:/word_assets/${cidName}`,
+            base64: converted.base64
+          });
+        } else {
+          imgEl.remove();
+        }
+      }
+
+      const fullHtml = `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:w="urn:schemas-microsoft-com:office:word"
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+<meta charset="utf-8" />
+<title>${escapeHtml(docTitle)}</title>
+<style>
+  @page Section1 {
+    size: 21.0cm 29.7cm;
+    margin: 1.8cm 1.8cm 1.8cm 1.8cm;
+  }
+  div.Section1 { page: Section1; }
+  body {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 11pt;
+    line-height: 1.45;
+    color: #000000;
+  }
+  .arabic-text {
+    font-family: "Traditional Arabic", "Amiri", serif;
+    direction: rtl;
+    font-size: 16pt;
+    line-height: 2.1;
+    text-align: right;
+  }
+  .kop-header-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border-bottom: 3px double #000000;
+    margin-bottom: 10px;
+  }
+  .kop-header-table td {
+    vertical-align: middle;
+    padding-bottom: 6px;
+  }
+  .identitas-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 11pt;
+    margin-bottom: 10px;
+    border-bottom: 1.5px solid #000000;
+  }
+  .identitas-table td {
+    padding: 2px;
+    vertical-align: top;
+  }
+  .soal-table, .opsi-table, .pernyataan-inner-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .soal-table td, .opsi-table td, .pernyataan-inner-table td {
+    vertical-align: top;
+    padding: 1.5px 0;
+  }
+  .akm-grid-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin-top: 5px;
+    font-size: 10.5pt;
+  }
+  .akm-grid-table th, .akm-grid-table td {
+    border: 1px solid #000000;
+    padding: 4px 6px;
+    vertical-align: top;
+  }
+  .akm-grid-table th {
+    background-color: #f1f5f9;
+    font-weight: bold;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="Section1">
+${wrapper.innerHTML}
+</div>
+</body>
+</html>`;
+
+      const boundary = '----=_NextPart_SMPN3_BESUKI_WORD_001';
+      let mhtml = `MIME-Version: 1.0\r\nContent-Type: multipart/related; boundary="${boundary}"\r\n\r\n`;
+      mhtml += `--${boundary}\r\nContent-Type: text/html; charset="utf-8"\r\nContent-Transfer-Encoding: 8bit\r\n\r\n${fullHtml}\r\n\r\n`;
+
+      mhtmlParts.forEach((part) => {
+        const chunked = part.base64.match(/.{1,76}/g)?.join('\r\n') || part.base64;
+        mhtml += `--${boundary}\r\nContent-Type: image/png\r\nContent-Transfer-Encoding: base64\r\nContent-Location: ${part.location}\r\n\r\n${chunked}\r\n\r\n`;
+      });
+
+      mhtml += `--${boundary}--`;
+      return mhtml;
+    }
+
+    async function downloadWordPart(part) {
+      if (!currentGeneratedData || !currentMeta) {
+        showToast('Silakan buat paket soal terlebih dahulu.', 'error');
+        return;
+      }
+
+      const sectionMap = {
+        soal: { id: 'doc-section-naskah', label: 'Naskah_Soal' },
+        kunci: { id: 'doc-section-kunci', label: 'Kunci_Jawaban' },
+        kisikisi: { id: 'doc-section-kisikisi', label: 'Kisi_Kisi_dan_Kartu_Soal' }
+      };
+
+      const target = sectionMap[part];
+      const el = target ? document.getElementById(target.id) : null;
+      if (!el) return;
+
+      showToast(`Menyiapkan dokumen Word (${target.label})...`, 'info');
+      const mhtmlContent = await buildMhtmlWordDocument(target.label, el.innerHTML);
+      const blob = new Blob([mhtmlContent], { type: 'application/msword;charset=utf-8' });
+      const safeMapel = currentMeta.mapel.replace(/[^a-zA-Z0-9]+/g, '_');
+      const filename = `${target.label}_${safeMapel}_Kelas_${currentMeta.kelas}_SMPN3_Besuki.doc`;
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast(`File ${filename} berhasil diunduh.`, 'success');
+    }
+
+    /* ==========================================================================
+       9. INISIALISASI EVENT LISTENER SAAT HALAMAN SIAP
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('soal-form');
+      const mapelSelect = document.getElementById('mapel-select');
+      const mapelCustom = document.getElementById('mapel-custom');
+      const btnResetForm = document.getElementById('btn-reset-form');
+
+      if (form) {
+        form.addEventListener('submit', handleGenerateSoal);
+      }
+
+      if (mapelSelect && mapelCustom) {
+        mapelSelect.addEventListener('change', () => {
+          if (mapelSelect.value === '__CUSTOM__') {
+            mapelCustom.classList.remove('hidden');
+            mapelCustom.focus();
+          } else {
+            mapelCustom.classList.add('hidden');
+          }
+        });
+      }
+
+      if (btnResetForm) {
+        btnResetForm.addEventListener('click', resetAllWorkspace);
+      }
+
+      ['jml-pg-sederhana', 'jml-pg-kompleks', 'jml-benar-salah', 'jml-menjodohkan', 'jml-esai'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('input', updateTotalBadge);
+      });
+
+      // Logo Pemkab (Kiri) & Logo Sekolah (Kanan)
+      document.getElementById('input-logo-pemkab')?.addEventListener('change', (e) => {
+        handleLogoFileUpload('pemkab', e.target.files?.[0]);
+      });
+      document.getElementById('url-logo-pemkab')?.addEventListener('change', (e) => {
+        saveLogoToStorage('pemkab', e.target.value.trim());
+      });
+      document.getElementById('btn-clear-logo-pemkab')?.addEventListener('click', () => {
+        const urlEl = document.getElementById('url-logo-pemkab');
+        if (urlEl) urlEl.value = '';
+        saveLogoToStorage('pemkab', '');
+      });
+
+      document.getElementById('input-logo-sekolah')?.addEventListener('change', (e) => {
+        handleLogoFileUpload('sekolah', e.target.files?.[0]);
+      });
+      document.getElementById('url-logo-sekolah')?.addEventListener('change', (e) => {
+        saveLogoToStorage('sekolah', e.target.value.trim());
+      });
+      document.getElementById('btn-clear-logo-sekolah')?.addEventListener('click', () => {
+        const urlEl = document.getElementById('url-logo-sekolah');
+        if (urlEl) urlEl.value = '';
+        saveLogoToStorage('sekolah', '');
+      });
+
+      // Pengaturan API Key & Ekspor Vercel
+      const keyInput = document.getElementById('custom-api-key');
+      const btnToggleKey = document.getElementById('btn-toggle-key');
+      const btnClearKey = document.getElementById('btn-clear-key');
+      const btnExportVercel = document.getElementById('btn-export-vercel-html');
+      const btnDownloadVercelCode = document.getElementById('btn-download-vercel-code');
+      const btnCopyVercelCode = document.getElementById('btn-copy-vercel-code');
+
+      try {
+        const savedKey = localStorage.getItem(STORAGE_KEY_API);
+        if (savedKey && keyInput) keyInput.value = savedKey;
+      } catch (e) {}
+
+      if (keyInput) {
+        keyInput.addEventListener('input', () => {
+          const clean = keyInput.value.replace(/^["']+|["']+$/g, '').replace(/\s+/g, '');
+          try {
+            if (clean) localStorage.setItem(STORAGE_KEY_API, clean);
+            else localStorage.removeItem(STORAGE_KEY_API);
+          } catch (e) {}
+          updateApiKeyUiState();
+        });
+      }
+
+      if (btnToggleKey && keyInput) {
+        btnToggleKey.addEventListener('click', () => {
+          const isPwd = keyInput.type === 'password';
+          keyInput.type = isPwd ? 'text' : 'password';
+          btnToggleKey.textContent = isPwd ? 'Sembunyikan' : 'Lihat';
+        });
+      }
+
+      if (btnClearKey && keyInput) {
+        btnClearKey.addEventListener('click', () => {
+          keyInput.value = '';
+          try {
+            localStorage.removeItem(STORAGE_KEY_API);
+          } catch (e) {}
+          updateApiKeyUiState();
+          showToast('API Key dihapus dari browser.', 'info');
+        });
+      }
+
+      btnExportVercel?.addEventListener('click', exportStandaloneVercelHtml);
+      btnDownloadVercelCode?.addEventListener('click', downloadVercelBackendFile);
+      btnCopyVercelCode?.addEventListener('click', copyVercelBackendCode);
+
+      updateTotalBadge();
+      loadSavedLogos();
+      updateApiKeyUiState();
+    });
+  </script>
+
+</body></html>
